@@ -1,0 +1,70 @@
+\newpage
+\problem{1: Maximum sum among nonadjacent subsequences} % {10+10+10+20=50}
+
+\problemdes
+
+Find an efficient algorithm for the following problem: 
+
+We are given an array of real numbers $V[1 \ldots n]$. We wish to find a subset of array positions, $S \subseteq[1 \ldots n]$ that maximizes $\sum_{i \in S} V[i]$ subject to no two consecutive array positions being in $S$. For example, say $V=[10,14,12,6,13,4]$, the best solution is to take elements $1, 3, 5$ to get a total of $10 + 12 + 13 = 35$. If instead, we try to take the $14$ in position $2$, we must exclude the $10$ and $12$ in positions $1$ and $3$, leaving us with the second best choice $2$, $5$ giving a total of $14 + 13 = 27$.
+
+\solution
+
+\subsolution{High-level description}
+
+For $S \subseteq[1 \ldots n]$ and $i \in S$, what we care is whether we choose $V[i]$ or not. For illustration, let's regard the maximum sum of current position as $dp[i]$.
+
+If we choose to take $V[i]$, then following the rule that \textit{no two consecutive array positions can be chosen}, we can only get a maximum sum $V[i] + dp[i-2]$. If we choose not to take $V[i]$, then the maximum sum is $dp[i-1]$.
+
+Beacuse we always want to get a maximum sum value, thus we can arrive at a equation that: 
+
+\[dp[i] = \max (V[i] + dp[i-2], dp[i-1])\]
+
+\noindent After going over $n$ element of $V$, the final $dp[n]$ can be the maximum sum among nonadjacent subsequences.
+
+Now, let's pay a few attention to the equation again. As we only use $dp[i-2]$ and $dp[i-1]$ when we calculate $dp[i]$ each time, actually we do not have to record the whole $dp[1 \ldots n]$. Instead, we only need two variables, say $a$ and $b$, to record the exact value of $dp[i-2]$ and $dp[i-1]$ at current position, and use a temp to record the current value $dp[i]$. That could save lots of space when $n$ is extramely large. 
+
+Another thing we need to pay attention to is: the initial value of $a$ and $b$. As we noticed, when calculating $temp = \max (V[1] + a, b)$ at position $1$, $a$ and $b$ should have an initial value of $0$.
+
+\subsolution{Pseudo Code}
+
+\begin{algorithm}[]
+  \caption{Maximum sum among nonadjacent subsequences}
+  \KwIn{$V[1 \dots n]$}
+  \KwOut{$b$ as maximum sum}
+  \If{$n=0$}
+  {
+    return 0\;
+  }
+  let $a, b = 0$\;
+  \For{$i=1; i \le n; i++$}
+  {
+    const $temp=b$\;
+    $b = \max(a+V[i], b)$\;
+    $a = temp$
+  }
+  return $b$\;
+\end{algorithm}
+
+\subsolution{Correctness}
+
+As defined above, our recurrence is 
+$dp[i] = \max (V[i] + dp[i-2], dp[i-1])$.
+
+To prove this is correct, consider the optimal solution for $dp[i]$. There are two cases: either $V[i]$ is chosen in the solution for $dp[i]$, or it is not.
+
+\textbf{Case 1:} If $V[i]$ is not chosen, then the maximum sum among nonadjacent subsequences of length $i$ is just the same as $i-1$; by definition, this is $dp[i]$.
+
+\textbf{Case 2:} If $V[i]$ is chosen, then the remaining elements selected for $dp[i]$ should be drawn from $1$ through $i-2$, that is $dp[i-2]$. Therefore, $dp[i] = V[i] + dp[i-2]$
+
+Finally, since $dp[i]$ is a maximization, the larger of these two cases is $dp[i]$.
+
+As base cases, we define $dp[0]$ and $dp[1]=0$.
+
+\subsolution{Time complexity}
+
+The operation in the \textit{For} loop can be completed in $O(1)$ time, thus in $O(n)$ iterations the algorithm results in a maximum sum.
+
+\subsolution{Data Structure}
+
+Array is enough. We are able to find the $V[i]$ in $O(1)$ time.
+

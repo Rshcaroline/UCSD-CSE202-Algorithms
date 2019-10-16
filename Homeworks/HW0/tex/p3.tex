@@ -1,0 +1,129 @@
+\newpage
+\problem{3: Maximum difference in a matrix} % {10+10+10+20=50}
+
+\problemdes
+
+Given an $n \times n$ matrix $M[i, j]$ of integers, find the maximum value of $M[c, d]-M[a, b]$ over all choices of indexes such that both $c > a$ and $d > b$.
+
+\solution
+
+\subsolution{High-level description}
+
+Basically Problem 3 shares the same idea with Problem 2: \textit{to record the minimum value $min$ and $maxdifference$ we've ever seen so far}. The differences is that Problem 2 is one dimensional while Problem 3 is two dimensional.
+
+When at a new position $(c, d)$, since the problem description says \textit{the indexes such that both $c>a$ and $d>b$}, so we can only choose the minimum value from $(a,b)$ with the restriction that $1 \le a \le c-1, 1 \le b \le d-1$. Compare $maxdifference$ with $M[c, d]-min$, and update the $maxdifference$ if $M[c, d]-min > maxdifference$.
+
+The trickiest thing is how to find the minimum value from $(a, b)$ efficiently. For $(c,d)$, we have the constriction that $1 \le a \le c-1, 1 \le b \le d-1$. Let's assume the minimum of $M[1 \dots c-1, 1 \dots d-1]$ is $min$. Now let's look at $(c, d+1)$, the constriction is $1 \le a \le c-1, 1 \le b \le d$, which means we should find the minimum of $M[1 \dots c-1, 1 \dots d]$. The interesting part of this problem is: if we already know the minimum of $M[1 \dots c-1, 1 \dots d-1]=min$, to compute $M[1 \dots c-1, 1 \dots d]$, we only need to compare the value of $min$ and the minimum of $M[1 \dots c-1, d]$. The principle of avoid common redundancy will save us lots of time.
+
+We maintain a list $T[1 \dots n]$ to record the minimum of $M[1 \dots c-1, 1 \dots d-1]$. As we iterate by rows, we update it. 
+
+\subsolution{Pseudo Code}
+
+\begin{algorithm}[]
+  \caption{Maximum difference in a matrix}
+  \KwIn{$M[1 \dots n, 1 \dots n]$}
+  \KwOut{$maxdifference$ as maximum difference}
+  initial $T[1 \dots n] = \infty$ \;
+  let $maxdifference = 0$\;
+  \For{$i=1; i \le n-1; i++$}
+  {
+    $//$ Update $T$ \;
+    $T[1] = \min(T[1], M[i, 1])$\;
+    \For{$j= 2; j \le n; j++$}
+    {
+        $T[j] = \min(T[j],  T[j-1], M[i+1, j])$ \;
+    }
+    $//$ Compare the $min$ with $M[c, d]$ \;
+    \For{$j= 2; j \le n; j++$}
+    {
+        $maxdifference = \max(maxdifference, M[i, j] - T[j-1])$ \;
+    }
+  }
+  return $maxdifference$\;
+\end{algorithm}
+
+\subsolution{Correctness}
+
+\item
+  Loop Invariant:
+
+  For the \(i\)-\(th\) outer loop, \(T[j]\) is the smallest element in
+  \(M[p,q]\) where \(1\le p \le i\) and \(1\le q \le j\)
+\item
+  Induction:
+
+\begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \item
+    Initialization:
+
+    \begin{itemize}
+    \item
+      When \(n=2\), firstly, we update \(T[1]\) as the smaller one in
+      \{\(\infty\) , \(M[1,1]\) \}, so \(T[1]\) satisfies that \(T[j ]\)
+      is the smallest element in \(M[p,q]\) where \(1\le p \le 1\) and
+      \(1\le q \le 1\) (\(i=j=1 \)).
+    \item
+      Then when \(j\) increasing from 2, we update
+      \(T[j] = \min(T[j], T[j-1], M[i,j])\) , where \(T[j]\) before
+      updating is \(\infty\), \(T[j-1]\) is the smallest element in
+      \(M[p,q]\) where \(1\le p \le i\) and \(1\le q \le j-1\) . So
+      after updating, \(T[j]\) is the smallest element in \(M[p,q]\)
+      where \(1\le p \le i\) and \(1\le q \le j\).
+    \item
+      Therefore, \(T[j]\) is the smallest element in \(M[p,q]\) where
+      \(p= i= 1\) and \(1\le q \le j\)
+    \end{itemize}
+  \item
+    Induction:
+
+    \begin{itemize}
+    \item
+      Assume that For the \(k\)-\(th\) outer loop, \(T[j]\) is the
+      smallest element in \(M[p,q]\) where \(1\le p \le k\) and
+      \(1\le q \le j\).
+    \item
+      So for \(k+1\), before updating, \(T[1]\) is the smallest element
+      in \(M[p,1]\) where \(1\le p\le k\). When using
+      \(T[1]=\min (T[1],M[i,1])\) in the \(k+1\) outer loop, we get
+      \(T[1]\) is the smallest in \(M[p,1]\) where \(1\le p \le k+1\).
+    \item
+      Then, when we update \(T[j] = \min(T[j], T[j-1], M[i,j])\), we
+      know \(T[j-1]\) is the smallest in \(M[p,q]\) where
+      \(1\le p \le k+1,\ 1\le q \le j-1\). And \(T[j]\) before updating
+      is the smallest in \(M[p,q]\) where
+      \(1\le p \le k,\ 1\le q \le j\). So after updating with
+      \(M[k+1, j]\), it's easy to obtain that \(T[j]\) is the smallest
+      element in \(M[p,q]\) where \(1\le p \le k+1\) and
+      \(1\le q \le j\).
+    \item
+      Therefore, \(T[j]\) is the smallest element in \(M[p,q]\) where
+      \(1\le p \le i\) and \(1\le q \le j\).
+    \end{itemize}
+  \end{enumerate}
+\item
+  Correctness when terminate
+
+  \begin{itemize}
+  \item
+    Because when \(n\ge i\), this loop will terminate, and \(T[j]\) is
+    the smallest element in \(M[p,q]\) where \(1\le p \le n\) and
+    \(1\le q \le j \).
+  \item
+    And we select the maximal difference from the maximal among
+    \(M[i,j] - T[j-1]\) in every loop, so we will return maximal
+    difference between \(M[i,j]\) and \(M[p,q]\) where \(p<i\) and
+    \(q<j\). Therefore, our algorithm is correct.
+  \end{itemize}
+\end{enumerate}
+
+\subsolution{Time complexity}
+
+$O(n^2)$. Since there are both outer loop of $n$ size and inner loop of $n$ size.
+
+\subsolution{Data Structure}
+
+Two dimensional Array for $M$, and one dimensional array for $T$. We are able to find the element in $O(1)$ time.
+
+
+

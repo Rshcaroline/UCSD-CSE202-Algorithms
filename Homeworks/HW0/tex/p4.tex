@@ -1,0 +1,79 @@
+\newpage
+\problem{4: Pond sizes} % {10+10+10+20=50}
+
+\problemdes
+
+You have an integer matrix representing a plot of land, where the value at a location represents the height above sea level. A value of zero indicates water. A pond is a region of water connected vertically, horizontally, or diagonally. The size of a pond is the total number of connected water cells. Write a method to compute the sizes of all ponds in the matrix.
+
+\solution
+
+\subsolution{High-level description}
+
+Although the problem description says it's an integer matrix, we can regard it as a connected graph. The connectivity depends on vertically, horizontally and diagonally adjacent. 
+
+Our high-level idea is: We start with a position $(i, j)$, if it has a value of zero, then it indicates water. We first set $size=1$, then we would like to find if the adjacent region is filled with water too, which means we should check the 8 adjacent positions $[(i+1, j), (i-1, j), (i, j+1), (i, j-1), (i-1, j-1), (i-1, j+1), (i+1, j+1), (i+1, j-1)]$. Notice, we should check if the position is at the edge so that index will not have access violation. 
+
+If the value of adjacent positions is also zero, we should increase the sizes of pond: $size+1$. Also, to avoid double counting, after we visited each position, we should use a mark so that we will not visit it again in the future. For this problem, we can simple set $M[i, j] = 1$. 
+
+\subsolution{Pseudo Code}
+
+\begin{algorithm}[]
+  \caption{Pond Size}
+  \KwIn{$M[1 \dots m, 1 \dots n]$}
+  \KwOut{A list containing the sizes of all ponds}
+  initial $res$ as an empty list \;
+  \For{$i=1; i \le m; i++$}
+  {
+    \For{$j= 1; j \le n; j++$}
+    {
+        \If{$M[i,j]$ is $0$}
+        {
+            $size = 1$ \;
+            $checkAdjacentPositions(M, i, j, size)$ \;
+            add $size$ into $res$ \;
+        }
+    }
+  }
+  return $res$\;
+\end{algorithm}
+
+\begin{algorithm}[]
+  \caption{$checkAdjacentPositions$}
+  \KwIn{$M[1 \dots m, 1 \dots n], i, j, size$}
+  \KwOut{None but updates size}
+  $//$ check access violation\;
+  \If{$i<1$ or $j<1$ or $i>m$ or $j>n$ or $M[i,j]$ is not $0$}
+  {
+    return \;
+  }
+  
+  $//$ $M[i,j]$ is $0$\;
+  $size = size+1$ \;
+  $M[i,j]=0$\;
+  
+  $//$ check adjacent positions\;
+  $//$ vertically\;
+  $checkAdjacentPositions(M, i+1, j, size)$ \;
+  $checkAdjacentPositions(M, i-1, j, size)$ \;
+  $//$ horizontally\;
+  $checkAdjacentPositions(M, i, j+1, size)$ \;
+  $checkAdjacentPositions(M, i, j-1, size)$ \;
+  $//$ diagonally\;
+  $checkAdjacentPositions(M, i-1, j-1, size)$ \;
+  $checkAdjacentPositions(M, i-1, j+1, size)$ \;
+  $checkAdjacentPositions(M, i+1, j+1, size)$ \;
+  $checkAdjacentPositions(M, i+1, j-1, size)$ \;
+
+\end{algorithm}
+
+\subsolution{Correctness}
+
+Actually, for each position $(i, j)$, we use DFS to search for all children nodes of it. As depth first search going, we count $size$ and mark the children as visited. This ensures both termination and the completeness.
+
+\subsolution{Time complexity}
+
+We can easily draw the conclusion that in algorithm \textit{Pond Size}, the outer and inner loop creates $O(mn)$ time complexity, here m is the number of rows and n is the number of columns of $M$. For operations inside the inner loop, we should notice a fact that there is at most once visit for each position (since we mark $M[i, j]=1$ for those ponds and will visit it again in the next time).
+
+Overall speaking, the total time complexity for this algorithm is $O(mn)$.
+
+% \subsolution{Data Structure}
