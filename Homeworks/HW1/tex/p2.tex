@@ -1,75 +1,69 @@
 \newpage
-\problem{2: Maximum difference in an array} % {10+10+10+20=50}
+\problem{2: Sorted matrix search} % {10+10+10+20=50}
 
 \problemdes
 
-Given an array $A$ of integers of length $n$, find the maximum value of $A(j) - A(i)$ over all choices of indexes such that $j > i$.
+Given an $m \times n$ matrix in which each row and column is sorted in ascending order, design an algorithm to find an element.
 
 \solution
 
 \subsolution{High-level description}
 
-At first glance, I thought we could use a sort algorithm and gets $max - min$ as result. But wait, the problem description says \textit{the indexes should be $j > i$}, which means \textit{Order matters}. 
+The basic brute force solution is iterate through each row and column, compare the value of the current element with the target value. However, this takes O(mn) time complexity. 
 
-What we really need to do is to record the minimum value $min$ and $maxdifference$ we've ever seen so far. When at a new position $i$, we compare current value $A(i)$ with $min$, if $A(i) < min$, then swatch their values; if $A(i) > min$, then compare $A(i) - min$ with $maxdifference$.
-
-After going over $n$ element of $A$, the final $maxdifference$ can be the maximum difference in an array.
+What we should do is taking advantage of the condition that each row and column is sorted in ascending order, which means we can start iterating from the corner elements and follow a zigzag path to find the target value. 
 
 \subsolution{Pseudo Code}
 
-\begin{algorithm}[]
-  \caption{Maximum difference in an array}
-  \KwIn{$A[1 \dots n]$}
-  \KwOut{$maxdifference$ as maximum difference}
-  let $min = A[1]$\;
-  let $maxdifference = 0$\;
-  \For{$i=2; i \le n; i++$}
+\begin{algorithm}
+  \caption{Sorted matrix search}
+  \KwIn{$matrix$ as a two-dimensional array, $target$}
+  \KwOut{$res$}
+  initialize $res$ as an empty list\;
+  \If{$len(matrix)$ == 0}
   {
-    \If{$A[i] < min$}
-    {
-        $min = A[i]$\;
-    }
-    \If{$maxdifference < A[i] - min$}
-    {
-        $maxdifference = A[i] - min$\;
-    }
+  	$//$ invalid input, return an empty list\;
+  	return $res$\;
   }
-  return $maxdifference$\;
+  $//$ initialize indexes, starting from the bottom left corner\;
+  $colIndex, rowIndex = 1, len(matrix)$\;
+  $//$ find the rough row index\;
+  \While{$rowIndex >= 0$ and $target < matrix[rowIndex][colIndex]$}
+  {
+  	$rowIndex = rowIndex-1$\;
+  }
+  $//$ as long as column index is valid\;
+  \While{$colIndex <= len(matrix[0])$}
+  {
+    \If{target == matrix[rowIndex][colIndex]}
+    {
+       $//$ found the target element\;
+       add $(rowIndex, colIndex)$ to the $res$\;
+       return $res$\;
+     }
+      \If{$target > matrix[rowIndex][colIndex]$}
+    {
+    	$//$ since the column is sorted in ascending order\;
+    	$colIndex = colIndex+1$\;
+     }
+     $//$ if $target < matrix[rowIndex][colIndex]$\;
+     \ElseIf{$rowIndex > 0$}
+     {
+     	$rowIndex = rowIndex-1$\;
+     }
+     $//$ row index is invalid\;
+     \Else{return $res$\;}
+     
+     $//$ column index is invalid\;
+     return $res$\;
+}
 \end{algorithm}
 
 \subsolution{Correctness}
-
-The instructor answered on \href{https://piazza.com/class/k10yypdn1hf7ld?cid=11}{Pizza} that we may assume that $n>1$. 
-
-The base case is $n=2$ and there are three cases: $A[1] < A[2]$, $A[1] = A[2]$ and $A[1] > A[2]$. As the algorithm goes, we first initialize $min=A[1], maxdifference=0$. 
-
-\textbf{Case 1:} $A[1] < A[2]$. Then we'll skip the first \textit{if} in the \textit{for} loop and then return $maxdifference=A[2]-A[1]$.
-
-\textbf{Case 2:} $A[1] = A[2]$. Then we'll skip the two \textit{if} in the \textit{for} loop and return $maxdifference=0$.
-
-\textbf{Case 3:} $A[1] > A[2]$. Then we'll update $min=A[2]$ and skip the second \textit{if} in the \textit{for} loop. We return $0$ as result.
-
-All three cases are correct for base case.
-
-If the case is correct for $n$. Then for $n+1$, there are three cases: $A[n+1] < min$, $A[n+1] = min$ and $A[n+1] > min$. 
-
-\textbf{Case 1:} $A[n+1] < min$. Then we'll update $min=A[n+1]$. We only have $n+1$ elements, so there won't be a $s>n+1$, we get the maximum value of $A(s)-A(n+1)$. Thus, we return $maxdifference$ of $A[1...n]$.
-
-\textbf{Case 2:} $A[n+1] = min$. Same as Case 1, we still return $maxdifference$ of $A[1...n]$.
-
-\textbf{Case 3:} $A[n+1] > min$. If $maxdifference<A[n+1]-min$, then we update $maxdifference$ and return it. Else, we return $maxdifference$ of $A[1...n]$.
-
-All three cases are correct for $n$ and $n+1$. By induction, this algorithm is corrrect.
 
 
 
 \subsolution{Time complexity}
 
-The operation in the \textit{For} loop can be completed in $O(1)$ time, thus in $O(n)$ iterations the algorithm results in a maximum difference.
-
-\subsolution{Data Structure}
-
-Array is enough. We are able to find the $A[i]$ in $O(1)$ time.
-
-
+In the worst case, we need to iterate through one row and one column, ending up in the upper right corner element, which means the time complexity is O(m+n).
 

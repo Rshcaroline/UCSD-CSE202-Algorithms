@@ -1,129 +1,58 @@
 \newpage
-\problem{3: Maximum difference in a matrix} % {10+10+10+20=50}
+\problem{3: Largest set of indices within a given distance} % {10+10+10+20=50}
 
 \problemdes
 
-Given an $n \times n$ matrix $M[i, j]$ of integers, find the maximum value of $M[c, d]-M[a, b]$ over all choices of indexes such that both $c > a$ and $d > b$.
+You are given a sequence of numbers $a_{1}, \dots, a_{n}$ in an array. You are also given a number k. Design an efficient algorithm to determine the size of the largest subset $L \subseteq\{1,2, \cdots, n\}$ of indices such that for all $i, j \in L$ the difference between $a_i$ and $a_j$ is less than or equal to $k$. There is an $O(n \log n)$ algorithm for this problem.
+For example, consider the sequence of numbers $a_1 = 7,a_2 = 3,a_3 = 10,a_4 = 7,a_5 = 8,a_6 = 7,a_7 = 1,a_8 = 15,a_9 = 8$ and let $k = 3$. $L = \{1,3,4,5,6,9\}$ is the largest such set of indices. Its size is 6.
 
 \solution
 
 \subsolution{High-level description}
 
-Basically Problem 3 shares the same idea with Problem 2: \textit{to record the minimum value $min$ and $maxdifference$ we've ever seen so far}. The differences is that Problem 2 is one dimensional while Problem 3 is two dimensional.
+Since we only need to determine the size of the largest subset L instead of determining the subset L itself, indexes are not so important then. What we really care about is the differences between elements and the max differences should be less than or equal to $k$. 
 
-When at a new position $(c, d)$, since the problem description says \textit{the indexes such that both $c>a$ and $d>b$}, so we can only choose the minimum value from $(a,b)$ with the restriction that $1 \le a \le c-1, 1 \le b \le d-1$. Compare $maxdifference$ with $M[c, d]-min$, and update the $maxdifference$ if $M[c, d]-min > maxdifference$.
+Thus, we can sort this array first, and then iterate through the sorted array, find out the maximum length of continuous elements with a maximum difference less than or equal to $k$. 
 
-The trickiest thing is how to find the minimum value from $(a, b)$ efficiently. For $(c,d)$, we have the constriction that $1 \le a \le c-1, 1 \le b \le d-1$. Let's assume the minimum of $M[1 \dots c-1, 1 \dots d-1]$ is $min$. Now let's look at $(c, d+1)$, the constriction is $1 \le a \le c-1, 1 \le b \le d$, which means we should find the minimum of $M[1 \dots c-1, 1 \dots d]$. The interesting part of this problem is: if we already know the minimum of $M[1 \dots c-1, 1 \dots d-1]=min$, to compute $M[1 \dots c-1, 1 \dots d]$, we only need to compare the value of $min$ and the minimum of $M[1 \dots c-1, d]$. The principle of avoid common redundancy will save us lots of time.
+One tricky thing is how to find the maximum length efficiently. Our solution is using two pointers, the left one stays at index $i$ and the right one points to index $j$. We have $i<j, A[i]<=A[j]$. 
 
-We maintain a list $T[1 \dots n]$ to record the minimum of $M[1 \dots c-1, 1 \dots d-1]$. As we iterate by rows, we update it. 
+\begin{itemize}
+\item While $A[j]-A[i]<=k$, we shift our right pointer. 
+\item Compare the current length $j-i$ with the longest size we've seen before, and take the maximum of these two values.
+\item Shift the left pointer to $i+1$, since our array is sorted, then $A[i+1]>=A[i]$, which means $A[j]-A[i+1]<=k$ still stands. However this time the length is $j-(i+1)$, and it must be less than the maximum value we just got. Hence, we can shift our right pointer to find the newest index $j'$.
+\item Go to Step 1.
+\end{itemize}
+
+After iterate through the whole array, we will get the maximum length $size$.
 
 \subsolution{Pseudo Code}
 
-\begin{algorithm}[]
-  \caption{Maximum difference in a matrix}
-  \KwIn{$M[1 \dots n, 1 \dots n]$}
-  \KwOut{$maxdifference$ as maximum difference}
-  initial $T[1 \dots n] = \infty$ \;
-  let $maxdifference = 0$\;
-  \For{$i=1; i \le n-1; i++$}
+\begin{algorithm}
+  \caption{Largest set of indices within a given distance}
+  \KwIn{$A$ as an array, $k$}
+  \KwOut{$size$}
+  sort the input array $A$\;
+  initialize size as min value of integer, say, $-\inf$\;
+  $leftPointer = 1, rightPointer = 1$\;
+  \While{$rightPointer <= len(A)$}
   {
-    $//$ Update $T$ \;
-    $T[1] = \min(T[1], M[i, 1])$\;
-    \For{$j= 2; j \le n; j++$}
+    \While{$A[rightPointer]-A[leftPointer]<=k$}
     {
-        $T[j] = \min(T[j],  T[j-1], M[i+1, j])$ \;
+    	$rightPointer = rightPointer + 1$\;
     }
-    $//$ Compare the $min$ with $M[c, d]$ \;
-    \For{$j= 2; j \le n; j++$}
-    {
-        $maxdifference = \max(maxdifference, M[i, j] - T[j-1])$ \;
-    }
-  }
-  return $maxdifference$\;
+    $size = \max(size, rightPointer-leftPointer)$\;
+    $leftPointer = leftPointer +1$\;
+}
+    return $size$\;
 \end{algorithm}
 
 \subsolution{Correctness}
 
-\item
-  Loop Invariant:
-
-  For the \(i\)-\(th\) outer loop, \(T[j]\) is the smallest element in
-  \(M[p,q]\) where \(1\le p \le i\) and \(1\le q \le j\)
-\item
-  Induction:
-
-\begin{enumerate}
-  \def\labelenumii{\arabic{enumii}.}
-  \item
-    Initialization:
-
-    \begin{itemize}
-    \item
-      When \(n=2\), firstly, we update \(T[1]\) as the smaller one in
-      \{\(\infty\) , \(M[1,1]\) \}, so \(T[1]\) satisfies that \(T[j ]\)
-      is the smallest element in \(M[p,q]\) where \(1\le p \le 1\) and
-      \(1\le q \le 1\) (\(i=j=1 \)).
-    \item
-      Then when \(j\) increasing from 2, we update
-      \(T[j] = \min(T[j], T[j-1], M[i,j])\) , where \(T[j]\) before
-      updating is \(\infty\), \(T[j-1]\) is the smallest element in
-      \(M[p,q]\) where \(1\le p \le i\) and \(1\le q \le j-1\) . So
-      after updating, \(T[j]\) is the smallest element in \(M[p,q]\)
-      where \(1\le p \le i\) and \(1\le q \le j\).
-    \item
-      Therefore, \(T[j]\) is the smallest element in \(M[p,q]\) where
-      \(p= i= 1\) and \(1\le q \le j\)
-    \end{itemize}
-  \item
-    Induction:
-
-    \begin{itemize}
-    \item
-      Assume that For the \(k\)-\(th\) outer loop, \(T[j]\) is the
-      smallest element in \(M[p,q]\) where \(1\le p \le k\) and
-      \(1\le q \le j\).
-    \item
-      So for \(k+1\), before updating, \(T[1]\) is the smallest element
-      in \(M[p,1]\) where \(1\le p\le k\). When using
-      \(T[1]=\min (T[1],M[i,1])\) in the \(k+1\) outer loop, we get
-      \(T[1]\) is the smallest in \(M[p,1]\) where \(1\le p \le k+1\).
-    \item
-      Then, when we update \(T[j] = \min(T[j], T[j-1], M[i,j])\), we
-      know \(T[j-1]\) is the smallest in \(M[p,q]\) where
-      \(1\le p \le k+1,\ 1\le q \le j-1\). And \(T[j]\) before updating
-      is the smallest in \(M[p,q]\) where
-      \(1\le p \le k,\ 1\le q \le j\). So after updating with
-      \(M[k+1, j]\), it's easy to obtain that \(T[j]\) is the smallest
-      element in \(M[p,q]\) where \(1\le p \le k+1\) and
-      \(1\le q \le j\).
-    \item
-      Therefore, \(T[j]\) is the smallest element in \(M[p,q]\) where
-      \(1\le p \le i\) and \(1\le q \le j\).
-    \end{itemize}
-  \end{enumerate}
-\item
-  Correctness when terminate
-
-  \begin{itemize}
-  \item
-    Because when \(n\ge i\), this loop will terminate, and \(T[j]\) is
-    the smallest element in \(M[p,q]\) where \(1\le p \le n\) and
-    \(1\le q \le j \).
-  \item
-    And we select the maximal difference from the maximal among
-    \(M[i,j] - T[j-1]\) in every loop, so we will return maximal
-    difference between \(M[i,j]\) and \(M[p,q]\) where \(p<i\) and
-    \(q<j\). Therefore, our algorithm is correct.
-  \end{itemize}
-\end{enumerate}
-
 \subsolution{Time complexity}
 
-$O(n^2)$. Since there are both outer loop of $n$ size and inner loop of $n$ size.
+The sorting algorithm can take $O(n\log n)$ time complexity. As for the remaining part, for both left pointer and right pointer, we only need to iterate through the array once, hence it's $O(n)$ time complexity.
 
-\subsolution{Data Structure}
-
-Two dimensional Array for $M$, and one dimensional array for $T$. We are able to find the element in $O(1)$ time.
+Overall, it's $O(n\log n)$.
 
 
 
