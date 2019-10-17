@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.19)  16 OCT 2019 22:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.19)  17 OCT 2019 00:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -904,30 +904,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 10--11
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--14
+Underfull \hbox (badness 10000) in paragraph at lines 14--15
 
  []
 
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 15.
+               Default added (so using `htbp') on input line 16.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--34
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 35--36
-
- []
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `htbp') on input line 29.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 37--38
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
 
  []
 
-) (./p2.tex [2]
+
+Underfull \hbox (badness 10000) in paragraph at lines 49--50
+
+ []
+
+[2]) (./p2.tex [3]
 Underfull \hbox (badness 10000) in paragraph at lines 3--5
 
  []
@@ -962,7 +961,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 66--67
 
  []
 
-[3]) (./p3.tex [4]
+[4]) (./p3.tex [5]
 Underfull \hbox (badness 10000) in paragraph at lines 3--5
 
  []
@@ -1003,7 +1002,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 51--52
 
  []
 
-[5]) (./p4.tex [6]
+[6]) (./p4.tex [7]
 Underfull \hbox (badness 10000) in paragraph at lines 3--5
 
  []
@@ -1038,7 +1037,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 45--40
 
  []
 
-[7]
+[8]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 41.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
  (./main.aux)
@@ -1049,9 +1048,9 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
  ) 
 Here is how much of TeX's memory you used:
- 20663 strings out of 492616
- 386333 string characters out of 6129481
- 470725 words of memory out of 5000000
+ 20670 strings out of 492616
+ 386411 string characters out of 6129481
+ 470619 words of memory out of 5000000
  24131 multiletter control sequences out of 15000+600000
  9760 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1071,10 +1070,10 @@ exlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/te
 xlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
 live/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texli
 ve/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on main.pdf (7 pages, 179641 bytes).
+Output written on main.pdf (8 pages, 183034 bytes).
 PDF statistics:
- 208 PDF objects out of 1000 (max. 8388607)
- 166 compressed objects within 2 object streams
- 73 named destinations out of 1000 (max. 500000)
+ 219 PDF objects out of 1000 (max. 8388607)
+ 176 compressed objects within 2 object streams
+ 80 named destinations out of 1000 (max. 500000)
  109 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -9,31 +9,55 @@ The maximum weight subtree is as follows. You are given a tree $T$ together with
 
 \subsolution{High-level description}
 
+Assume for each node of this tree, it at most has $m$ children nodes. Our solution is to do a tree traversal. At each node, we iterate all the children nodes and find their subtree value. Then the value of subtree rooted at the current node is equal to the sum of current node value and the subtree values of all $m$ children nodes. After getting the current subtree weight sum, we compare it with the stored maximum value and take the largest.
 
 \subsolution{Pseudo Code}
 
 \begin{algorithm}[]
-  \caption{Maximum sum among nonadjacent subsequences}
-  \KwIn{$V[1 \dots n]$}
-  \KwOut{$b$ as maximum sum}
-  \If{$n=0$}
+  \caption{Maximum weight subtree}
+  \KwIn{root node $root$}
+  \KwOut{$maxWeightSum$}
+  \If{$root$ is not valid}
   {
-    return 0\;
+  	return $0$\;
   }
-  let $a, b = 0$\;
-  \For{$i=1; i \le n; i++$}
-  {
-    const $temp=b$\;
-    $b = \max(a+V[i], b)$\;
-    $a = temp$
-  }
-  return $b$\;
+  initialize $maxWeightSum$ as the min value of the integer, say, $-\inf$\;
+  $findMaxWeightSum(root, maxWeightSum)$\;
+  return $maxWeightSum$\;
 \end{algorithm}
+
+\begin{algorithm}[]
+  \caption{Find max weight sum}
+  \KwIn{root node $root$, $maxWeightSum$}
+  \KwOut{$maxWeightSum$}
+  \If{$root$ is not valid}
+  {
+  	return $0$\;
+  }
+  weightSum = root.value\;
+  \For{child in root.children}
+  {
+  	$weightSum = weightSum + findMaxWeightSum(child, maxWeightSum)$
+  }
+  $maxWeightSum = \max(maxWeightSum, weightSum)$
+  return $weightSum$\;
+\end{algorithm}
+
 
 \subsolution{Correctness}
 
 \subsolution{Time complexity}
 
-\subsolution{Data Structure}
+Since the tree traversal only visits each node once, hence the time complexity is $O(n)$, and $n$ is the number of nodes.
+
+We can also interpret the complexity as the following recursion tree: 
+
+$T(n) = m*T(n/m)+ c$.
+
+And the second step is $T(n/m) = m*T(n/(m^2)) + c$, thus $T(n) = m^2*T(n/(m^2)) + 2c + c$ ...
+
+And the last step is $T(n) = n*T(1) + c(1+m^1+...m^h)$, with h is the hight of the recursion tree $h = \log_m(n)$.
+
+So the time complexity is $O(n*c + c*(m^(h+1)-1)/(m-1)) = O(n)$
 
 
