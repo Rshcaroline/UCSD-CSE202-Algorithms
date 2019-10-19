@@ -5,41 +5,116 @@
 
 A Toeplitz matrix is an $\boldsymbol{n} \times \boldsymbol{n}$ matrix $A=\left(a_{i j}\right)$ such that $a_{i j}=a_{i-1, j-1}$ for $i = 2,3,...,n$ and $j = 2,3,...,n$.
 
-\begin{itemize}
-\item Is the sum of two Toeplitz matrices necessarily Toeplitz? What about the product?
-\item Describe how to represent a Toeplitz matrix so that two $\boldsymbol{n} \times \boldsymbol{n}$ Toeplitz matrices can be added in $O(n)$ time.
-\item Give an $O(n lg n)$-time algorithm for multiplying an $\boldsymbol{n} \times \boldsymbol{n}$ Toeplitz matrix by a vector of length $n$. Use your representation from part (b).
-\item Give an efficient algorithm for multiplying two $O(n lg n)$ Toeplitz matrices. Analyze its running time.
-\end{itemize}
+\subproblem{SubProblem1}
+
+Is the sum of two Toeplitz matrices necessarily Toeplitz? What about the product?
+
+\solution
+
+Define two Toeplitz matrices $A$ and $B$. According to the definition, we have $a_{i j}=a_{i-1, j-1}$ and $b_{i j}=b_{i-1, j-1}$.
+
+1. The sum of two Toeplitz matrices is also a Toeplitz since $$(A+B)_{i j} = a_{i j}+b_{i j}=a_{i-1, j-1}+b_{i-1, j-1}=(A+B)_{i-1,j-1}$$
+
+2. The product of two Toeplitz matrices is not always a Toeplitz since $$(AB)_{i j}=\sum_{k=1}^{n}{a_{i k}b_{k j}} = \sum_{k=1}^{n}{a_{i-1, k-1}b_{k-1, j-1}} \neq  \sum_{k=1}^{n}{a_{i-1, k}b_{k, j-1}} = (AB)_{i-1, j-1}$$
+
+
+
+\subproblem{SubProblem2}
+
+Describe how to represent a Toeplitz matrix so that two $\boldsymbol{n} \times \boldsymbol{n}$ Toeplitz matrices can be added in $O(n)$ time.
+
+\solution
+
+Any $\boldsymbol{n} \times \boldsymbol{n}$ Toeplitz matrix has the form:
+
+$$A=\left[\begin{array}{cccccc}{a_{0}} & {a_{-1}} & {a_{-2}} & {\cdots} & {\cdots} & {a_{-(n-1)}} \\ {a_{1}} & {a_{0}} & {a_{-1}} & {\ddots} & {} & {\vdots} \\ {a_{2}} & {a_{1}} & {\ddots} & {\ddots} & {\ddots} & {\vdots} \\ {\vdots} & {\ddots} & {\ddots} & {\ddots} & {a_{-1}} & {a_{-2}} \\ {\vdots} & {} & {\ddots} & {a_{1}} & {a_{0}} & {a_{-1}} \\ {a_{n-1}} & {\cdots} & {\cdots} & {a_{2}} & {a_{1}} & {a_{0}}\end{array}\right]$$
+
+We observed that there are only $2n-1$ diagonals in this matrix and the values on a diagonal are always the same. Hence, we only need a $2n-1$ length list to store all the diagonal values and to represent a Toeplitz matrix. 
+
+In detail, we only need to store the first row and first column values in the list, which are $$a_0, a_{-1}, \dots, a_{-(n-1)}, a_1, a_2, \dots, a_{n-1}$$ 
+
+We further adapt the indexes to $1, 2, \dots, 2n-1$, thus the vector should be $a = a_1, a_2, \dots, a_{2n-1}$. $A$ could be reconstructed as $$\mathrm{A}=\left[\begin{array}{cccc}{\mathrm{a}_{\mathrm{n}}} & {\mathrm{a}_{\mathrm{n}-1}} & {\cdots} & {\mathrm{a}_{1}} \\ {\mathrm{a}_{\mathrm{n+1}}} & {\mathrm{a}_{\mathrm{n}}} & {\cdots} & {\mathrm{a}_{2}} \\ {\vdots} & {\vdots} & {\cdots} & {\vdots} \\ {\mathrm{a}_{2\mathrm{n}-2}} & {\mathrm{a}_{2\mathrm{n}-3}} & {\cdots} & {\mathrm{a}_{\mathrm{n}-1}} \\ {\mathrm{a}_{2 \mathrm{n}-1}} & {\mathrm{a}_{2 \mathrm{n}-2}} & {\cdots} & {\mathrm{a}_{\mathrm{n}}}\end{array}\right]$$
+
+\subsolution{Time complexity}
+
+Then two Toeplitz matrices can be added in $O(n)$ time and space complexity.
+
+
+
+\subproblem{SubProblem3}
+
+Give an $O(n \log n)$-time algorithm for multiplying an $\boldsymbol{n} \times \boldsymbol{n}$ Toeplitz matrix by a vector of length $n$. Use your representation from part (b).
+
+\solution
+
+We multiply an $\boldsymbol{n} \times \boldsymbol{n}$ Toeplitz matrix $A$ by a vector of length $n$, and the output size will be $\boldsymbol{n} \times \boldsymbol{1}$. As the matrix multiplication rule, we have
+
+$$\mathrm{A}=\left[\begin{array}{cccc}{\mathrm{a}_{\mathrm{n}}} & {\mathrm{a}_{\mathrm{n}-1}} & {\cdots} & {\mathrm{a}_{1}} \\ {\mathrm{a}_{\mathrm{n+1}}} & {\mathrm{a}_{\mathrm{n}}} & {\cdots} & {\mathrm{a}_{2}} \\ {\vdots} & {\vdots} & {\cdots} & {\vdots} \\ {\mathrm{a}_{2\mathrm{n}-2}} & {\mathrm{a}_{2\mathrm{n}-3}} & {\cdots} & {\mathrm{a}_{\mathrm{n}-1}} \\ {\mathrm{a}_{2 \mathrm{n}-1}} & {\mathrm{a}_{2 \mathrm{n}-2}} & {\cdots} & {\mathrm{a}_{\mathrm{n}}}\end{array}\right], b=\begin{bmatrix} b_1\\ b_2 \\ \vdots \\b_{n} \end{bmatrix}$$
+
+$$(A\times b)_{i j}=c_{i} = \sum_{k=1}^{n}{a_{n+i-k}b_{k}},  \text { for }1\leq i \leq n$$
+
+The above formulation can be reconstructed as 
+
+$$a=\begin{bmatrix} a_1& a_2 & \cdots & a_{2n-1} \end{bmatrix}, b=\begin{bmatrix} b_1\\ b_2 \\ \vdots \\b_{n} \\ 0 \\ \vdots \\ 0 \end{bmatrix}$$
+
+$$temp = a \oplus b$$
+
+$$temp_{i} = \sum_{k=1}^{i} a_{i-k} b_{k} \text { for } 1 \leq i \leq 2n-1$$
+
+$$c_{i} = \sum_{k=1}^{n}{a_{n+i-k}b_{k}}, \text { for } 1\leq i \leq n$$
+
+$$(A\times b)_{i j}=c_{i} =temp_{n+i}, 1\le i \le n$$
+
+%\subsolution{Correctness}
+
+\subsolution{Time complexity}
+
+Computing the convolution of two vectors of size $2n-1$ requires a time complexity of $O(n \log n)$.
+
+
+
+\subproblem{SubProblem4}
+
+Give an efficient algorithm for multiplying two $\boldsymbol{n} \times \boldsymbol{n}$ Toeplitz matrices. Analyze its running time.
 
 \solution
 
 \subsolution{High-level description}
 
-\subsolution{Pseudo Code}
+We are given two $\boldsymbol{n} \times \boldsymbol{n}$ Toeplitz matrices as followes:
 
-\begin{algorithm}
-  \caption{identify Row Context}
-  \KwIn{$r_i$, $Backgrd(T_i)$=${T_1,T_2,\ldots ,T_n}$ and similarity threshold $\theta_r$}
-  \KwOut{$con(r_i)$}
-  $con(r_i)= \Phi$\;
-  \For{$j=1;j \le n;j \ne i$}
-  {
-    float $maxSim=0$\;
-    $r^{maxSim}=null$\;
-    \While{not end of $T_j$}
-    {
-      compute Jaro($r_i,r_m$)($r_m\in T_j$)\;
-      \If{$(Jaro(r_i,r_m) \ge \theta_r)\wedge (Jaro(r_i,r_m)\ge r^{maxSim})$}
-      {
-        replace $r^{maxSim}$ with $r_m$\;
-      }
-    }
-    $con(r_i)=con(r_i)\cup {r^{maxSim}}$\;
-  }
-  return $con(r_i)$\;
-\end{algorithm}
+$$\mathrm{A}=\left[\begin{array}{cccc}{\mathrm{a}_{\mathrm{n}}} & {\mathrm{a}_{\mathrm{n}-1}} & {\cdots} & {\mathrm{a}_{1}} \\ {\mathrm{a}_{\mathrm{n+1}}} & {\mathrm{a}_{\mathrm{n}}} & {\cdots} & {\mathrm{a}_{2}} \\ {\vdots} & {\vdots} & {\cdots} & {\vdots} \\ {\mathrm{a}_{2\mathrm{n}-2}} & {\mathrm{a}_{2\mathrm{n}-3}} & {\cdots} & {\mathrm{a}_{\mathrm{n}-1}} \\ {\mathrm{a}_{2 \mathrm{n}-1}} & {\mathrm{a}_{2 \mathrm{n}-2}} & {\cdots} & {\mathrm{a}_{\mathrm{n}}}\end{array}\right], \mathrm{B}=\left[\begin{array}{cccc}{\mathrm{b}_{\mathrm{n}}} & {\mathrm{b}_{\mathrm{n}-1}} & {\cdots} & {\mathrm{b}_{1}} \\ {\mathrm{b}_{\mathrm{n+1}}} & {\mathrm{b}_{\mathrm{n}}} & {\cdots} & {\mathrm{b}_{2}} \\ {\vdots} & {\vdots} & {\cdots} & {\vdots} \\ {\mathrm{b}_{2\mathrm{n}-2}} & {\mathrm{b}_{2\mathrm{n}-3}} & {\cdots} & {\mathrm{b}_{\mathrm{n}-1}} \\ {\mathrm{b}_{2 \mathrm{n}-1}} & {\mathrm{b}_{2 \mathrm{n}-2}} & {\cdots} & {\mathrm{b}_{\mathrm{n}}}\end{array}\right]$$
+
+What we want to do is to multiply these two Toeplitz matrices.
+
+According to the definition of Toeplitz matrices,  we get
+
+$$(AB)_{i j}=\sum_{k=1}^{n}{a_{i k}b_{k j}} = \sum_{k=1}^{n}{a_{n+i-k}b_{n-j+k}}$$
+
+For example, for $(1,1)$ and $(2,2)$, we have
+
+$$(AB)_{1,1}=a_n*b_n + a_{n-1}*b_{n+1} + \cdots + a_{1}*b_{2n-1}=\sum_{k=1}^{n}{a_{n+1-k}b_{n-1+k}}$$
+
+$$(AB)_{2,2}=a_{n+1}*b_{n-1} + a_{n}*b_{n} + \cdots + a_{2}*b_{2n-2}=\sum_{k=1}^{n}{a_{n+2-k}b_{n-2+k}}$$
+
+Here comes the amazing thing: we noticed that $(AB)_{2,2} = (AB)_{1,1}-a_{1}*b_{2n-1}+a_{n+1}*b_{n-1}$. And this rule also applies to other diagonals, which means, to compute for the final output matrix, for each one of the $2n-1$ diagonals, we only need to compute dot products over length $n$ vector $a$ and $b$. Then other values on this diagonal can be computed in constant time $O(1)$.
+
+So, in practice, we first compute the first row and the first column of $AB$, by multiplying the corresponding rows and columns of the input matrices:
+
+$$(AB)_{1 j}= \sum_{k=1}^{n}{a_{n+1-k}b_{n-j+k}}$$
+$$(AB)_{i 1}= \sum_{k=1}^{n}{a_{n+i-k}b_{n-1+k}}$$
+
+Then, we compute other values on each diagonal using the previously computed values. 
 
 \subsolution{Time complexity}
 
-\subsolution{Data Structure}
+Computing $(AB)_{1 j}$ and $(AB)_{j 1}$ takes $n^2$ since we need to iterate through $n$ elements and at each element, the computation of two length-n vectors dot products takes $O(n)$ time complexity.
+
+Then after getting $(AB)_{1,j}$ and $(AB)_{i,1}$, we need to compute all values on the $2n-1$ diagonals, thus takes O(n) time. For each diagonal, we need to iterate through at most n elements, takes O(n). Each time we need an O(1) time computation to do an addition and a subtraction based on the previously computed values, thus, computing each diagonal value takes total $O(n*1)$ time.
+
+Overall speaking, this algorithm takes $O(n^2)$.
+
+
+
+
+

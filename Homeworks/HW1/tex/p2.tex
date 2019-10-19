@@ -18,12 +18,11 @@ What we should do is taking advantage of the condition that each row and column 
 \begin{algorithm}
   \caption{Sorted matrix search}
   \KwIn{$matrix$ as a two-dimensional array, $target$}
-  \KwOut{$res$}
-  initialize $res$ as an empty list\;
+  \KwOut{indexes of the element}
   \If{$len(matrix)$ == 0}
   {
   	$//$ invalid input, return an empty list\;
-  	return $res$\;
+  	return $0$\;
   }
   $//$ initialize indexes, starting from the bottom left corner\;
   $colIndex, rowIndex = 1, len(matrix)$\;
@@ -38,8 +37,7 @@ What we should do is taking advantage of the condition that each row and column 
     \If{target == matrix[rowIndex][colIndex]}
     {
        $//$ found the target element\;
-       add $(rowIndex, colIndex)$ to the $res$\;
-       return $res$\;
+       return $(rowIndex, colIndex)$\;
      }
       \If{$target > matrix[rowIndex][colIndex]$}
     {
@@ -52,10 +50,10 @@ What we should do is taking advantage of the condition that each row and column 
      	$rowIndex = rowIndex-1$\;
      }
      $//$ row index is invalid\;
-     \Else{return $res$\;}
+     \Else{return $0$\;}
      
      $//$ column index is invalid\;
-     return $res$\;
+     return $0$\;
 }
 \end{algorithm}
 
