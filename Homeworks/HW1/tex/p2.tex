@@ -59,7 +59,15 @@ What we should do is taking advantage of the condition that each row and column 
 
 \subsolution{Correctness}
 
+The element we want to find is $x$. If x is in the matrix, let's prove $x$ must be in the submatrix whose bottom left corner is $y$.
 
+1. This clearly holds in the beginning, since our algorithm starts from the bottom left corner and $y$ is the bottom left corner of the input matrix. It will output $y$'s indexes.
+
+2. If $y>x$, then all elements from $y$ to the right end are also larger than $x$, so $x$ cannot be contained in that row. Therefore our assumption continues to hold with $x$ replaced with its neighbor below (if any. If $y$ has no below neighbors, we can deduce that $x$ is not found in the matrix). 
+
+3. If $y<x$ then all elements below $y$ are also smaller than $x$, and so $x$ cannot be contained in that column. Therefore the invariant continues to hold with $y$ replaced with its right neighbor (if $y$ has no right neighbors, we can deduce that $x$ is not found in the matrix).
+
+On a $m \times n$ matrix, this process terminates in at most $m+n$ steps, either finding $x$ or determining that it does not appear in the matrix.
 
 \subsolution{Time complexity}
 

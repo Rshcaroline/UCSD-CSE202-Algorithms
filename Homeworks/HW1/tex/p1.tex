@@ -50,9 +50,9 @@ We update $maxWeightSum$ each time we use $findMaxWeightSum(root, maxWeightSum)$
 
 The weight sum at each node is computed as root weight plus all the children's weights. There are two cases, 
 
-1. The root's weight is positive. Then indeed, the maximum weight sum should plus node weight.
+1. We choose the root node. Then the maximum weight sum should be children's maximum weight sum plus node weight. We'll iterate through each child and add up the final weight sum, then compare the weigh sum with the maximum sum we've seen so far.
 
-2. The root's weight is negative. Then the maximum weight sum is one of the children's maximum weight sum. We'll update the $maxWeightSum$ when we iterate the $findMaxWeightSum$ function to compute children's value.
+2. We don't choose the root node. Then the maximum weight sum is one of the children's maximum weight sum. We'll update the $maxWeightSum$ when we iterate the $findMaxWeightSum$ function to compute children's value.
 
 Also, our algorithm terminates. It returns 0 for leaf's children node value if the node is a leaf node. Thus, it's correct.
 

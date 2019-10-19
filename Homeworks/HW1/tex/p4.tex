@@ -1,5 +1,5 @@
 \newpage
-\problem{4: Pond sizes} % {10+10+10+20=50}
+\problem{4: Toeplitz matrices} % {10+10+10+20=50}
 
 \problemdes
 
@@ -59,13 +59,17 @@ $$a=\begin{bmatrix} a_1& a_2 & \cdots & a_{2n-1} \end{bmatrix}, b=\begin{bmatrix
 
 $$temp = a \oplus b$$
 
+We compute the convolution of vectors $a$ and $b$ as $temp$, then output the $(A\times b)_{i j}=c_{i} =temp_{n+i}$.
+
+\subsolution{Correctness}
+
+We prove the algorithm's correctness by using the definition of convolution and matrix multiplication, which is:
+
 $$temp_{i} = \sum_{k=1}^{i} a_{i-k} b_{k} \text { for } 1 \leq i \leq 2n-1$$
 
 $$c_{i} = \sum_{k=1}^{n}{a_{n+i-k}b_{k}}, \text { for } 1\leq i \leq n$$
 
 $$(A\times b)_{i j}=c_{i} =temp_{n+i}, 1\le i \le n$$
-
-%\subsolution{Correctness}
 
 \subsolution{Time complexity}
 
@@ -105,6 +109,22 @@ $$(AB)_{1 j}= \sum_{k=1}^{n}{a_{n+1-k}b_{n-j+k}}$$
 $$(AB)_{i 1}= \sum_{k=1}^{n}{a_{n+i-k}b_{n-1+k}}$$
 
 Then, we compute other values on each diagonal using the previously computed values. 
+
+\subsolution{Correctness}
+
+We want to prove that the values on each diagonal can be computed by simple addition and subtraction based on $(AB)_{1,j}$ and $(AB)_{i,1}$ iteratively.
+
+We use the center diagonal as an example, which is $(AB)_{i,i}$.
+
+$$
+\begin{aligned}
+(AB)_{i-1,i-1} &=  \sum_{k=1}^{n}{a_{n+i-1-k}b_{n-i-1+k}}\\
+(AB)_{i,i} &=  \sum_{k=1}^{n}{a_{n+i-k}b_{n-i+k}}\\
+&= (AB)_{i-1,i-1} - {a_{i-1}b_{2n-i-1}}+ {a_{n+i-1}b_{n-i+1}} 
+\end{aligned}
+$$
+
+It's proved. After we calculate $(AB)_{1,j}$ and $(AB)_{i,1}$, then we can iteratively calculate all values on the $2n-1$ diagonals.
 
 \subsolution{Time complexity}
 

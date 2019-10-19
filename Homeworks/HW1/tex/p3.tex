@@ -20,7 +20,7 @@ One tricky thing is how to find the maximum length efficiently. Our solution is 
 \item While $A[j]-A[i]<=k$, we shift our right pointer. 
 \item Compare the current length $j-i$ with the longest size we've seen before, and take the maximum of these two values.
 \item Shift the left pointer to $i+1$, since our array is sorted, then $A[i+1]>=A[i]$, which means $A[j]-A[i+1]<=k$ still stands. However this time the length is $j-(i+1)$, and it must be less than the maximum value we just got. Hence, we can shift our right pointer to find the newest index $j'$.
-\item Go to Step 1.
+\item $i=i+1$, $j=j'$. Go to Step 1.
 \end{itemize}
 
 After iterate through the whole array, we will get the maximum length $size$.
@@ -47,6 +47,12 @@ After iterate through the whole array, we will get the maximum length $size$.
 \end{algorithm}
 
 \subsolution{Correctness}
+
+After sorting, the array should be kept in ascending order. If the maximum difference between $A[i]$ and $A[j]$ is $k$, then we prove that if there exists any $x$, and $i \leq x \leq j$, then the maximum difference between $A[x]$ and $A[j]$ is less than or equal to $k$.
+
+Proof: Since our array is sorted, then $A[x]>=A[i]$ and we have $A[j]-A[i]<=k$, which means $A[j]-A[x]<=k$ still stands. 
+
+The length of this subset is $j-x$, and it must be less than the maximum size value we just got $\max(max, j-i) >= j-i >= j-x$. Hence, for $x$, our algorithm again tries to find the maximum right boundary. By doing this, our algorithm ensures for each $A[i]$, we find the maximum length of the subset for all elements in the subset where the difference between any pair of elements is less than or equal to k.
 
 \subsolution{Time complexity}
 

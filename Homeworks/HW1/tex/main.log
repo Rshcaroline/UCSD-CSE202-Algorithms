@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.19)  18 OCT 2019 21:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.19)  19 OCT 2019 12:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -956,12 +956,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--61
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 64--65
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 72--73
 
  []
 
-[4]) (./p3.tex [5]
+) (./p3.tex [5]
 Underfull \hbox (badness 10000) in paragraph at lines 3--5
 
  []
@@ -997,12 +997,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 49--50
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 51--52
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 57--58
 
  []
 
-[6]) (./p4.tex [7]
+) (./p4.tex [7]
 Underfull \hbox (badness 10000) in paragraph at lines 3--5
 
  []
@@ -1038,22 +1038,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 44--45
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 70--71
+Underfull \hbox (badness 10000) in paragraph at lines 64--65
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 76--77
+Underfull \hbox (badness 10000) in paragraph at lines 74--75
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--83
+Underfull \hbox (badness 10000) in paragraph at lines 80--81
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--87
 
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 109--110
+Underfull \hbox (badness 10000) in paragraph at lines 113--114
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 129--130
 
  []
 
@@ -1070,11 +1080,11 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
 Here is how much of TeX's memory you used:
  20657 strings out of 492616
  386241 string characters out of 6129481
- 474725 words of memory out of 5000000
+ 473725 words of memory out of 5000000
  24131 multiletter control sequences out of 15000+600000
  9760 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,15n,81p,1003b,548s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,15n,81p,1017b,548s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb><
 /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></u
@@ -1090,7 +1100,7 @@ exlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/te
 xlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
 live/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texli
 ve/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on main.pdf (10 pages, 189191 bytes).
+Output written on main.pdf (10 pages, 192794 bytes).
 PDF statistics:
  209 PDF objects out of 1000 (max. 8388607)
  164 compressed objects within 2 object streams
