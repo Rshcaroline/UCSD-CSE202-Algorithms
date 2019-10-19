@@ -46,6 +46,16 @@ Assume for each node of this tree, it at most has $m$ children nodes. Our soluti
 
 \subsolution{Correctness}
 
+We update $maxWeightSum$ each time we use $findMaxWeightSum(root, maxWeightSum)$ function to find a maximum weight sum. Every time we calculate the weight sum, we compare it with the maximum weight sum we've seen so far.
+
+The weight sum at each node is computed as root weight plus all the children's weights. There are two cases, 
+
+1. The root's weight is positive. Then indeed, the maximum weight sum should plus node weight.
+
+2. The root's weight is negative. Then the maximum weight sum is one of the children's maximum weight sum. We'll update the $maxWeightSum$ when we iterate the $findMaxWeightSum$ function to compute children's value.
+
+Also, our algorithm terminates. It returns 0 for leaf's children node value if the node is a leaf node. Thus, it's correct.
+
 \subsolution{Time complexity}
 
 Since the tree traversal only visits each node once, hence the time complexity is $O(n)$, and $n$ is the number of nodes.

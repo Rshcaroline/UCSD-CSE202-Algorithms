@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.19)  18 OCT 2019 20:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.19)  18 OCT 2019 21:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -921,12 +921,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 47--48
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 49--50
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 59--60
 
  []
 
-[2]) (./p2.tex [3]
+) (./p2.tex [3]
 Underfull \hbox (badness 10000) in paragraph at lines 3--5
 
  []
@@ -1070,7 +1070,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
 Here is how much of TeX's memory you used:
  20657 strings out of 492616
  386241 string characters out of 6129481
- 473725 words of memory out of 5000000
+ 474725 words of memory out of 5000000
  24131 multiletter control sequences out of 15000+600000
  9760 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1090,7 +1090,7 @@ exlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/te
 xlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
 live/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texli
 ve/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on main.pdf (10 pages, 188573 bytes).
+Output written on main.pdf (10 pages, 189191 bytes).
 PDF statistics:
  209 PDF objects out of 1000 (max. 8388607)
  164 compressed objects within 2 object streams
