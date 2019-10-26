@@ -3,6 +3,9 @@
 
 \problemdes
 
+We can use dynamic programming on a directed graph $G = (V,E)$ for speech recognition. Each edge $(u, v) \in E$ is labeled with a sound $\sigma(u, v)$ from a finite set $\Sigma$ of sounds. The labeled graph is a formal model of a person speaking a restricted language. Each path in the graph starting from a distinguished vertex $v_0 \in V$ corresponds to a possible sequence of sounds produced by the model. The label of a directed path is defined to be the concatenation of the labels of the edges on that path.
+
+Describe an efficient algorithm that, given an edge-labeled graph $G$ with distinguished vertex $v_0$ and a sequence $s = (\sigma_1, \dots, \sigma_k)$ of characters from $\Sigma$, returns a path in $G$ that begins at $v_0$ and has s as its label, if any such path exists. Otherwise, the algorithm should return NO-SUCH-PATH. Analyze the running time of the algorithm. Clearly write any dynamic programming formulation you may use to solve this problem.
 
 \solution
 
@@ -19,6 +22,8 @@
 
 
 \subsolution{Time complexity}
+
+$O(k |V|^2)$
 
 
 

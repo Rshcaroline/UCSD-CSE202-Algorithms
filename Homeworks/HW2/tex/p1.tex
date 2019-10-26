@@ -15,26 +15,49 @@ Find a chain of maximum length.
 
 We use dynamic programming to solve this problem. 
 
-Let $T(n)$ be the maximum length of chain containing $w_n$. Then we can have the state transition function as follows:
+\textit{Subproblem}: We refer $T(n)$ as the maximum length of chain containing $w_n$. 
+
+\textit{Base Case}: For a set of only one string, the solution is simply the string itself.
+
+\textit{Iteration}: We can have the state transition function as follows:
 
 $$T(n) = \max(T(i) + 1), \text{ where }w_{n}=u w_{i} v, 1\leq i <n$$
 
 Since our algorithm should output a sequence of string chain. We need to store some additional values:
 
-1. $maxIndex$: the tail string's index of the maximum length chain
+1. $maxLength$: the length of the maximum chain
 
-2. $P(n)$: the index $i$ that maximize $T(n)$
+2. $maxIndex$: the tail string's index of the maximum length chain
 
-With $maxIndex$ and $P(n)$, we can backtrack our maximum length chain of subwords following the order
+3. $P(n)$: the index $i$ that maximize $T(n)$
+
+We update $maxLength$ and $maxIndex$ each time after we computed $T(n)$. With $maxLength$, $maxIndex$ and $P(n)$, we can backtrack our maximum length chain of subwords following the order
 
 $$[w_{maxindex}, w_{P(maxindex)}, w_{P(P(maxindex))}, \dots]$$
 
 To find out whether $w_{n}=u w_{i} v$, we need to define a new algorithm called $isSubsequence$. We can choose a pattern matching algorithm to do the string comparison. Here, we choose KMP algorithm and the time complexity is proportional to the length of the string, which is O(k).
 
-\subsolution{Pseudo Code}
+%\subsolution{Pseudo Code}
 
 
 \subsolution{Correctness}
+
+\textit{Base Case}: A set of only one string trivially has only one option for its maximum length chain of subwords.
+
+\textit{Induction Hypothesis}: Suppose all subproblems are correctly computed up to an arbitrary length of $k$.
+
+\textit{Induction Step}: We would like to prove that if the induction hypothesis holds, then our algorithm's "iteration" component correctly computes the subproblem of the length of $k+1$. The following chain of logic should be sufficient:
+
+1. Per the hypothesis, all the lengths smaller than $k$ are correct.
+
+2. For string $w_{k+1}$, we have $T(k+1) = \max(T(i) + 1), \text{ where }w_{k+1}=u w_{i} v, 1 \leq i < k+1$. We exhaustively check relevant subproblems.
+
+3. We choose the $T(i)$ that yields a max $T(k+1)$. Therefore, we choose the right option from among our previous calculated values and record the index $i$ as $P(k+1)=i$.
+
+4. Thus, given that our hypothesis holds, our update correctly computes the length of $k+1$'s solutions.
+
+Because our base case, hypothesis, and step are correct, our algorithm is proven correct with a proof by induction.
+
 
 
 \subsolution{Time complexity}
