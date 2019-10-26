@@ -11,12 +11,23 @@ In other words, you want to pick a list of up to k distinct projects, $i_{1}, \l
 
 \subsolution{High-level description}
 
-Greedy.
+We use the greedy algorithm to solve this problem.
 
+According to the problem description, we have the following observations:
+
+1. We can only perform at most $k$ projects before the IPO.
+
+2. We want to maximize our total capital. Each project has a $p_i$ as the profit after the project is completed. Our accumulated capital after completing the project $i_j$ should be $C_j = C_0 + \sum_{h=1}^{h=j} p_{i_h}$.
+
+3. We should have sufficient capital to start the project $i_{j+1}$ after completing the first $j$ projects.
+
+Intuitively, if we are to write a greedy algorithm for a problem like this, we might first consider choosing the projects based on its profit, i.e., we choose the project that has the highest profit each time. However, we should still consider another thing: we should have sufficient capital to start this profitable project. We now formally describe our algorithm:
+
+Sort projects based on its minimum capital required to start the project. When choosing the $j$-th project, we should choose the most profitable project among all the projects $i_{j+1}$ where $c_{i_{j+1}} \leq C_j$. After chosen $k$ projects, terminate and return the final capital as well as what we've chosen.
 
 % Return the final capital and the sequence of project selected!
 
-\subsolution{Pseudo Code}
+%\subsolution{Pseudo Code}
 
 
 \subsolution{Correctness}
@@ -25,7 +36,12 @@ Greedy.
 
 \subsolution{Time complexity}
 
-$O(n\log n)$
+The initial sort is $O(n\log n)$. Each iteration afterward can be done by $O(\log n)$ if we maintain a max-heap data structure to help us choose the most profitable project under the condition $c_{i_{j+1}} \leq C_j$. And we do that iteration for $k$ times, i.e., this takes $O(k)$ time complexity. 
+
+Overall, our algorithm can be completed in $O(n\log n+ k\log n)=O(n\log n)$.
+
+
+
 
 
 
