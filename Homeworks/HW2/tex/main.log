@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.19)  26 OCT 2019 12:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.19)  26 OCT 2019 12:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -939,7 +939,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 33--34
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 37--38
+Underfull \hbox (badness 10000) in paragraph at lines 45--46
 
  []
 
@@ -1025,7 +1025,7 @@ Here is how much of TeX's memory you used:
  24107 multiletter control sequences out of 15000+600000
  7311 words of font info for 28 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,6n,81p,562b,327s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,6n,81p,727b,327s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb><
 /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb>
@@ -1042,7 +1042,7 @@ ve/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
 e/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/
 2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/20
 19/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on main.pdf (6 pages, 185360 bytes).
+Output written on main.pdf (6 pages, 186563 bytes).
 PDF statistics:
  126 PDF objects out of 1000 (max. 8388607)
  85 compressed objects within 1 object stream

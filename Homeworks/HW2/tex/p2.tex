@@ -32,7 +32,15 @@ Sort projects based on its minimum capital required to start the project. When c
 
 \subsolution{Correctness}
 
+We use the exchange argument to prove the correctness of this algorithm.
 
+Imagine an optimal solution OPT and our greedy solution is G. For ease of comparison, we sort projects in both solutions by increasing profits. For the purpose of comparison, we will consider projects to be equal if they have the same profit and start capital (so duplicate projects are equal to each other). Now for project $o_i$ and $g_i$, we account for the following two cases:
+
+1. $o_i = g_i$: The solutions agree, so we can move on.
+
+2. $o_i \neq g_i$: We argue that this is not possible. Suppose there exists an optimal solution OPT in which $o_i \neq g_i$. Then, because the greedy algorithm prioritizes projects with higher profit when the start capital is sufficient. And after the most profitable project has been done, the current capital $C_i$ should also be the highest, which will leave more choosing space for the next project. Hence, it is impossible for OPT (or any other solution) to have a higher capital than G. Therefore, this case can only lead to OPT to be worse than G. However, this would contradict our knowledge that OPT is optimal. By proof by contradiction, there is no optimal solution in which $o_i \neq g_i$.
+
+Therefore, we have proven that any optimal solution is necessarily equal to the greedy solution. 
 
 \subsolution{Time complexity}
 
