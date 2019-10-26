@@ -9,22 +9,21 @@ You are given a sequence $a_1, a_2, \dots, a_n$ of nonnegative integers, where $
 
 \subsolution{High-level description}
 
-Greedy.
+We use the greedy algorithm to solve this problem.
 
-Huffman encoding.
+According to the problem description, we observe the fact that the larger number sum, the larger cost to do an addition. Hence, intuitively, if we are to write a greedy algorithm for a problem like this, we might first consider choosing the two numbers based on its sum. We now formally describe our algorithm:
 
+Sort the sequence $A= a_1, a_2, \dots, a_n$. Then we need to form a Huffman tree with all the numbers are the leaves with the same order as the sorted sequence $A'$. The key idea is each time, we choose to do the addition among the smallest two numbers.
 
-\subsolution{Pseudo Code}
-
-
+%\subsolution{Pseudo Code}
 
 \subsolution{Correctness}
 
-
+With each sorted $a_i$ ordered in the leaves of the Huffman tree, we can simply cite the correctness proof of the Huffman Coding. 
 
 \subsolution{Time complexity}
 
-$O(n\log n)$
+The sorting takes $O(n\log n)$ time. The binary Huffman tree is constructed using a priority queue and each priority queue operation takes time $O(\log n)$.
 
 
 
