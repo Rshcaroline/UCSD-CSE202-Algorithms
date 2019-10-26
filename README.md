@@ -6,6 +6,13 @@
 - [Greedy](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Notes/Notes2Greedy.pdf)
 - [Dynamic Programming](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Notes/Notes3DP.pdf)
 
+## Problem sets
+
+- [Problems with linear or sublinear complexity](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Problems/aps_lin.pdf)
+- [Divide and conquer method, searching and sorting](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Problems/aps_dc.pdf)
+- [Greedy method](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Problems/aps_gr.pdf)
+- [Dynamic programming](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Problems/aps_dp.pdf)
+
 ## Homeworks
 
 |                                                              | My Solution                                                  | TA's Solution                                                | Problems                                                     | Algorithms       | Graded Problems | Scores       | Corresponding Leetcode Problem                               |
