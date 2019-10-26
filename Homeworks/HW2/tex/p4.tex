@@ -11,19 +11,52 @@ Describe an efficient algorithm that, given an edge-labeled graph $G$ with disti
 
 \subsolution{High-level description}
 
+We use dynamic programming to solve this problem. 
 
+We first define $T(i, v_j) = 1$ if there exist a path from $v_0$ to $v_j$ labeled with the prefix of length $i$ of $s$, i.e., labeled with $\sigma_1, \dots, \sigma_i$, and $T(i, v_j) = 0$ otherwise. We have $0\leq i \leq k$ and $1\leq j \leq |V|$. As the description of this problem, our algorithm should return a path in $G$ that begins at $v_0$ and has s as its label if $T(k, v_j) = 1$, otherwise return NO-SUCH-PATH.
 
-\subsolution{Pseudo Code}
+We initialize $T(0, v_0)=1$ and for other $j \neq 0$, we have  $T(0, v_j)=0$. Our transition function can be the followings:
 
+$$T(i, v_j)=\max \left\{T(i-1, v_u) |(v_u, v_j) \in E \text { and } \sigma(v_u, v_j)=\sigma_i \right\}$$
 
+This transition function means to set the value of $T(i, v_j)$, we should check whether there is an edge $(v_u, v_j)$ labeled with $\sigma(v_u, v_j)$ leading to $T(i, v_j)$ from a vertex $v_u$ that was reached in the previous step. If there is such a vertex $v_u$ and $T(i-1, v_u)=1$, then we can arrive $v_u$ by a path labeled with the prefix of length $i-1$ of s, i.e., $\sigma_1, \dots, \sigma_{i-1}$. We use the $\max$ to ensure that if there exist one path, then $T(i, v_j)=1$.
+
+Since our output should be the path begins at $v_0$ and has s as its label. We need to store some additional values:
+
+1. $maxIndex$: the index of the tail vertex $v_j$ in this generated path
+
+2. $P(j)$: the index $u$ that maximize $T(i, v_j)$
+
+We update $maxIndex$ and $P(j)$ each time after we computed $T(i, v_j)$. With $maxIndex$ and $P(j)$, we can retrace our generated path following the order
+
+$$[v_{maxindex}, v_{P(maxindex)}, v_{P(P(maxindex))}, \dots]$$
+
+%\subsolution{Pseudo Code}
 
 \subsolution{Correctness}
 
+\textit{Base Case}: $S=(\sigma_1)$, then our algorithm just find if there is an edge $(v_0, v_j)$ labeled with $\sigma(v_0, v_j)=\sigma_1$ leading to $T(1, v_j)$ from a vertex $v_0$.
+
+\textit{Induction Hypothesis}: Suppose all subproblems are correctly computed up to an arbitrary length of $n$.
+
+\textit{Induction Step}: We would like to prove that if the induction hypothesis holds, then our algorithm's "iteration" component correctly computes the subproblem of the length of $n+1$. The following chain of logic should be sufficient:
+
+1. Per the hypothesis, all the lengths smaller than $n$ are correct.
+
+2. For $\sigma_{n+1}$, we have $T(n+1, v_j) = \max(T(n, v_u)) |(v_u, v_j) \in E \text { and } \sigma(v_u, v_j)=\sigma_{n+1}$. We exhaustively check relevant subproblems.
+
+3. We choose the $T(n, v_u)$ that yields a max $T(n+1, v_j)$. Therefore, we choose the right option from among our previous calculated values and record the vertex index $j$ as $P(n+1)=j$.
+
+4. Thus, given that our hypothesis holds, our update correctly computes the length of $n+1$'s solutions.
+
+Because our base case, hypothesis, and step are correct, our algorithm is proven correct with a proof by induction.
 
 
 \subsolution{Time complexity}
 
-$O(k |V|^2)$
+The $T(i, v_j)$ loop will traverse from $\sigma_1, \dots, \sigma_k$, which takes $O(k)$ time. At each $T(i, v_j)$, we will iterate through $|V|$ vertexes, takes $O(|V|)$ time. When at each $v_j$, we will check if $(v_u, v_j) \in E \text { and } \sigma(v_u, v_j)=\sigma_{n+1}$ for each $v_u$, which takes $O(|V|)$ time.
+
+Overall, our algorithm takes $O(k |V|^2)$ time.
 
 
 

@@ -31,7 +31,7 @@ Since our algorithm should output a sequence of string chain. We need to store s
 
 3. $P(n)$: the index $i$ that maximize $T(n)$
 
-We update $maxLength$ and $maxIndex$ each time after we computed $T(n)$. With $maxLength$, $maxIndex$ and $P(n)$, we can backtrack our maximum length chain of subwords following the order
+We update $maxLength$ and $maxIndex$ each time after we computed $T(n)$. With $maxLength$, $maxIndex$ and $P(n)$, we can retrace our maximum length chain of subwords following the order
 
 $$[w_{maxindex}, w_{P(maxindex)}, w_{P(P(maxindex))}, \dots]$$
 
@@ -57,7 +57,6 @@ To find out whether $w_{n}=u w_{i} v$, we need to define a new algorithm called 
 4. Thus, given that our hypothesis holds, our update correctly computes the length of $k+1$'s solutions.
 
 Because our base case, hypothesis, and step are correct, our algorithm is proven correct with a proof by induction.
-
 
 
 \subsolution{Time complexity}
