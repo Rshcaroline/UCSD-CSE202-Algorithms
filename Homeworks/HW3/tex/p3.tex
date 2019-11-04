@@ -1,0 +1,48 @@
+\newpage
+\problem{3: Minimum Cost Sum} % {10+10+10+20=50}
+
+\problemdes
+
+You are given a sequence $a_1, a_2, \dots, a_n$ of nonnegative integers, where $n \geq 1$. You are allowed to take any two numbers and add them to produce their sum. However, each such addition has a cost which is equal to the sum. The goal is to the find the sum of all the numbers in the sequence with minimum total cost. Describe an algorithm for finding the sum of the numbers in the sequence with minimum total cost. Argue the correctness of your algorithm.
+
+\solution
+
+\subsolution{High-level description}
+
+We use the greedy algorithm to solve this problem.
+
+According to the problem description, we observe the fact that the larger number sum, the larger cost to do an addition. Hence, intuitively, if we are to write a greedy algorithm for a problem like this, we might first consider choosing the two numbers based on its sum. We now formally describe our algorithm:
+
+Sort the sequence $A= a_1, a_2, \dots, a_n$. Then we need to form a Huffman tree with all the numbers are the leaves with the same order as the sorted sequence $A'$. The key idea is each time, we choose to do the addition among the smallest two numbers. For $n$ numbers, we need to perform addition for $n-1$ times. Hence, at time step $i$, we will extract two smallest numbers from the Huffman tree, do an addition, then we add their sum to the Huffman tree. After iterating $n-1$ times, the final minimum value of the Huffman tree is the sum of the numbers in the sequence with the minimum total cost.
+
+\subsolution{Pseudo Code}
+
+\begin{algorithm}[]
+  \caption{Minimum Cost Sum}
+  \KwIn{the sequence $A$}
+  \KwOut{sum of the numbers}
+  sort $A$\;
+  Construct a priority queue $Q$ based on the sorted $A$\;
+  \For{$i=1$ to $length(A)-1$}
+  {
+  	$z = \text{new node}$\;
+	$z.left =Extract-Min(Q)$\;
+	$z.right =Extract-Min(Q)$\;
+	$z.value = z.left.value + z.right.value$\;
+	$Insert(Q, z)$\;
+  }
+  return $Extract-Min(Q)$\;
+\end{algorithm}
+
+\subsolution{Correctness}
+
+With each sorted $a_i$ ordered in the leaves of the Huffman tree, we can simply cite the correctness proof of the Huffman Coding from \href{http://www.cs.toronto.edu/~vassos/teaching/c73/handouts/huffman.pdf}{here}.
+
+\subsolution{Time complexity}
+
+The sorting takes $O(n\log n)$ time. The binary Huffman tree is constructed using a priority queue and each priority queue operation takes time $O(\log n)$. We need to perform addition for $n-1$ times.
+
+Overall, our algorithm takes $O(n\log n)$ time complexity.
+
+
+

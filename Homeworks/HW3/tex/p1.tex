@@ -1,0 +1,62 @@
+\newpage
+\problem{1: Graph cohesiveness} % {10+10+10+20=50}
+
+\problemdes
+
+In sociology, one often studies a graph $G$ in which nodes represent people and edges represent those who are friends with each other. Let’s assume for purposes of this question that friendship is symmetric, so we can consider an undirected graph.
+
+Now suppose we want to study this graph $G$, looking for a “close-knit” group of people. One way to formalize this notion would be as follows. For a non-empty subset $S$ of nodes, let $e(S)$ denote the number of edges in $S$-that is, the number of edges that have both ends in $S$. We define the \textit{cohesiveness} of $S$ as $e(S)/|S|$. A natural thing to search for would be a set S of people achieving the maximum cohesiveness.
+
+\subproblem{Subproblem 1}
+
+Give a polynomial-time algorithm that takes a rational number $\alpha$ and determines whether there exists a set $S$ with cohesiveness at least $\alpha$.
+
+\solution
+
+\subsolution{High-level description}
+
+We represent $G$ as $(V, E)$. Then we constructed a directed graph $G'=(N, E')$. It has vertex $N_v$ for every vertex $v\in V$, vertex $N_e$ for every edge $e\in E$, and two distinguished vertex source $s$ and sink $t$. 
+
+Assume $c(N_i, N_j)$ is the capacity of edge $(N_i, N_j)$. We let $c(s, N_e)=1$ for every edge $e\in E$, $c(N_v, t)=\alpha$ for every vertex $v\in V$, $c(N_e, N_i)=c(N_e, N_j)=\infty$ if $e=(i, j)\in E$ and $i,j\in V$. 
+
+To determine whether there exists a set $S$ with cohesiveness at least $\alpha$ is to determine if there is an $s$-$t$ cut in graph $G'$ of capacity at most $|E|$. It's a minimum cut problem. We use the maximum-flow algorithm (e.g. Ford-Fulkerson) to find an $s$-$t$ cut of minimum capacity and compare it with $|E|$.
+
+% \subsolution{Pseudo Code}
+
+\subsolution{Correctness}
+
+We define an $s$-$t$ cut as a partition $(A, B)$ of N with $s \in A, t \in B$. The above-defined network $G'$ has the following properties:
+
+\begin{itemize}
+\item The source node $s$ has $|E|$ outgoing edges and their capacity is all equal to 1. So the capacity of the min cut should be less than or equal to $|E|$ (we can simply get this value by letting A=$s$).
+\item Since $\alpha$ is a rational number. We can transform our graph by multiplying all edge weights by the same constant factor $\beta$, where $\beta$ is defined to be the smallest positive number such that $\alpha \beta$ is an integer. Then, all capacities are scaled to integers.
+\item If $N_e$ is in $A$ where $e=(i, j)$, then $N_i$ and $N_j$ should also be in $A$. This is because $c(N_i, N_j) = \infty$ and infinite capacity edge can not cross a min cut since our min cut is less than or equal to $|E|$. Similarly, if node $N_v$ is in $B$, then all $N_e$ where $e=(v, j)$ for $v ,j\in V$ must also be in $B$.
+\end{itemize}
+
+We use $A_e$ to denote the vertices $N_e$ in $A$ and $A_v$ to denote the vertices $N_v$ in $A$. Then $|A_e|$ should be exactly the number of edges in the original graph $G$ that have both endpoints in $A_v$, and according to the problem description, there are $e(A_v)$ such edges. The edges that cross our cut are 
+
+\begin{itemize}
+\item All edges $(N_v, t)$ for $N_v \in A_v$, each with the capacity $\alpha$. There are $|A_v|$ edges.
+\item All edges $s, N_e$ for which $e=(i,j)$ and $i,j \notin A_v$, each has a capacity $1$. There are $|E|-e(A_v)$ edges.
+\end{itemize}
+
+Hence, the total capacity of our cut is $c(A,B)=\alpha |A_v|+|E|-e(A_v)$. We can arrange this to get
+
+\[ |E|-c(A,B) = e(A_v) - |A_v|\alpha \]
+
+According to the problem description, we can see that $e(A_v)/|A_v| \ge \alpha$ iff $|E|-c(A,B)\ge 0$. That is $c(A,B)\le |E|$.
+
+So we've prove that we have a min cut with $c(A,B) \le |E|$ then we can find a group of vertices in our original graph with cohesiveness greater than $\alpha$.
+
+\subproblem{Subproblem 2}
+
+Give a polynomial-time algorithm to find a set $S$ of nodes with maximum cohesiveness.
+
+\subsolution{High-level description}
+
+There are $|V|$ choices for the size of $A_v$ and $C_{2}^{|A_v|}$ choices for $e(A_v)$. Thus, it's a total of $O(|V|^3)$ possible values for $\alpha$. We can find the set of maximum cohesiveness by binary search on $\alpha$ by checking if there exists a subset with cohesiveness greater than a given value.
+
+\subsolution{Time complexity}
+
+By using the maximum-flow algorithm to determine the minimum cut for a given $\alpha$, the final time complexity should be $O(\log|V| (|V|+|E|)^3)$.
+
