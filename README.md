@@ -5,6 +5,7 @@
 - [Divide And Conquer](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Notes/Notes1DivideAndConquer.pdf)
 - [Greedy](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Notes/Notes2Greedy.pdf)
 - [Dynamic Programming](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Notes/Notes3DP.pdf)
+- [Network Flow](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Notes/Notes4NetworkFlow.pdf)
 
 ## Problem sets
 
@@ -12,6 +13,7 @@
 - [Divide and conquer method, searching and sorting](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Problems/aps_dc.pdf)
 - [Greedy method](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Problems/aps_gr.pdf)
 - [Dynamic programming](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Problems/aps_dp.pdf)
+- [Network Flow](https://github.com/Rshcaroline/UCSD-CSE202-Algorithms/blob/master/Problems/aps_flows.pdf)
 
 ## Homeworks
 
