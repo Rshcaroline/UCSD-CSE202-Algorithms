@@ -1,52 +1,33 @@
 \newpage
-\problem{2: Business plan} % {10+10+10+20=50}
+\problem{2: Remote Sensors} % {10+10+10+20=50}
 
 \problemdes
 
-Consider the following problem. You are designing the business plan for a start-up company. You have identified $n$ possible projects for your company, and for, $1 \leq i \leq n$, let $c_i > 0$ be the minimum capital required to start the project $i$ and $p_i > 0$ be the profit after the project is completed. You also know your initial capital $C_0 > 0$. You want to perform at most $k$, $1 \leq i \leq n$, projects before the IPO and want to maximize your total capital at the IPO. Your company cannot perform the same project twice.
+Devise as efficient as possible algorithm for the following problem. You have n remote sensors $s_i$ and $m < n$ base stations $B_j$. For $1 \le j \le m$, base station $B_j$ is located at $(x_j,y_j)$ in the two-dimensional plane. You are given that no two base-stations are less than 1 km apart (in standard Euclidean distance, $\sqrt{\left(\left(x_{j}-x_{k}\right)^{2}+\left(y_{j}-y_{k}\right)^{2}\right)})$. All base stations have the same integer bandwidth capacity $C$.
 
-In other words, you want to pick a list of up to k distinct projects, $i_{1}, \ldots, i_{k^{\prime}}$ with $k^{\prime} \leq k$. Your accumulated capital after completing the project $i_j$ will be $C_{j}=C_{0}+\sum_{h=1}^{h=j} p_{i_{h}}$. The sequence must satisfy the constraint that you have sufficient capital to start the project $i_{j+1}$ after completing the first $j$ projects, i.e.,$C_j \geq c_{i_{j+1}}$ for each $j=0, \dots, k^{\prime}-1$.You want to maximize the final amount of capital, $C_{k^{\prime}}$.
+For $1 \le i \le n$, sensor $s_i$ is located at $(x_i, y_i)$ in the two-dimensional plane and has an integer bandwidth requirement of $r_i$, which can be met by assigning bandwidth on multiple base stations. Let $b_{i,j}$ be the amount of bandwidth assigned to sensor $s_i$ on base station $B_j$. The assignment must meet the following constraints:
+
+\begin{itemize}
+\item No sensor may be assigned any bandwidth on a base station more than 2 km distance from it, i.e., if the distance from $s_i$ to $B_j$ is greater than $2$, $b_{i,j} = 0$.
+\item The sum of all the bandwidth assigned to any remote sensor $s_i$ must be at least $r_i$: for each $1 \leq i \leq n$, $\sum_{j} b_{i, j} \geq r_{i}$.
+\item The sum of all bandwidth assigned on base station $B_j$ must be at most $C$: for each $1 \leq j \leq m$, $\sum_{i} b_{i, j} \leq C$.
+\end{itemize}
+
+Your algorithm should find a solution meeting the above constraints if possible, and otherwise output a message saying “No solution exists”. Prove the correctness of your algorithm and discuss its time complexity.
 
 \solution
 
 \subsolution{High-level description}
 
-We use the greedy algorithm to solve this problem.
-
-According to the problem description, we have the following observations:
-
-1. We can only perform at most $k$ projects before the IPO.
-
-2. We want to maximize our total capital. Each project has a $p_i$ as the profit after the project is completed. Our accumulated capital after completing the project $i_j$ should be $C_j = C_0 + \sum_{h=1}^{h=j} p_{i_h}$.
-
-3. We should have sufficient capital to start the project $i_{j+1}$ after completing the first $j$ projects.
-
-Intuitively, if we are to write a greedy algorithm for a problem like this, we might first consider choosing the projects based on its profit, i.e., we choose the project that has the highest profit each time. However, we should still consider another thing: we should have sufficient capital to start this profitable project. We now formally describe our algorithm:
-
-Sort projects based on its minimum capital required to start the project. When choosing the $j$-th project, we should choose the most profitable project among all the projects $i_{j+1}$ where $c_{i_{j+1}} \leq C_j$. After chosen $k$ projects, terminate and return the final capital as well as what we've chosen.
-
-% Return the final capital and the sequence of project selected!
 
 %\subsolution{Pseudo Code}
 
 
 \subsolution{Correctness}
 
-We use the exchange argument to prove the correctness of this algorithm.
-
-Imagine an optimal solution OPT and our greedy solution is G. For ease of comparison, we sort projects in both solutions by increasing profits. For the purpose of comparison, we will consider projects to be equal if they have the same profit and start capital (so duplicate projects are equal to each other). Now for project $o_i$ and $g_i$, we account for the following two cases:
-
-1. $o_i = g_i$: The solutions agree, so we can move on.
-
-2. $o_i \neq g_i$: We argue that this is not possible. Suppose there exists an optimal solution OPT in which $o_i \neq g_i$. Then, because the greedy algorithm prioritizes projects with higher profit when the start capital is sufficient. And after the most profitable project has been done, the current capital $C_i$ should also be the highest, which will leave more choosing space for the next project. Hence, it is impossible for OPT (or any other solution) to have a higher capital than G. Therefore, this case can only lead to OPT to be worse than G. However, this would contradict our knowledge that OPT is optimal. By proof by contradiction, there is no optimal solution in which $o_i \neq g_i$.
-
-Therefore, we have proven that any optimal solution is necessarily equal to the greedy solution. 
 
 \subsolution{Time complexity}
 
-The initial sort is $O(n\log n)$. Each iteration afterward can be done by $O(\log n)$ if we maintain a max-heap data structure to help us choose the most profitable project under the condition $c_{i_{j+1}} \leq C_j$. And we do that iteration for $k$ times, i.e., this takes $O(k)$ time complexity. 
-
-Overall, our algorithm can be completed in $O(n\log n+ k\log n)=O(n\log n)$.
 
 
 
