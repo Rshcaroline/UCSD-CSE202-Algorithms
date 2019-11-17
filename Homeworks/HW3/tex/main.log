@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.19)  12 NOV 2019 16:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.19)  15 NOV 2019 23:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -925,12 +925,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 51--52
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 55--56
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--60
+Underfull \hbox (badness 10000) in paragraph at lines 65--66
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 69--70
 
  []
 
@@ -955,16 +960,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 20--21
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 26--27
+Underfull \hbox (badness 10000) in paragraph at lines 55--56
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 29--30
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 69--70
 
  []
 
-) (./p3.tex [4]
+) (./p3.tex [5]
 Underfull \hbox (badness 10000) in paragraph at lines 3--5
 
  []
@@ -995,21 +1000,41 @@ Underfull \hbox (badness 10000) in paragraph at lines 27--28
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--30
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 31--32
+Underfull \hbox (badness 10000) in paragraph at lines 51--52
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--34
+Underfull \hbox (badness 10000) in paragraph at lines 55--56
 
  []
 
-) (./p4.tex [5]
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 72--73
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 74--75
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 106--107
+
+ []
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 115--116
+
+ []
+
+) (./p4.tex [8]
 Underfull \hbox (badness 10000) in paragraph at lines 3--5
 
  []
@@ -1030,21 +1055,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--15
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 16--17
+Underfull \hbox (badness 10000) in paragraph at lines 37--38
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 18--19
+Overfull \hbox (7.39288pt too wide) in paragraph at lines 45--46
+[]\OT1/cmr/m/n/10 Let $\OML/cmm/m/it/10 C$ \OT1/cmr/m/n/10 be the ca-pac-ity of
+ the cut. Thus, $\OML/cmm/m/it/10 C \OT1/cmr/m/n/10 = [][] \OML/cmm/m/it/10 b[]
+ \OT1/cmr/m/n/10 + [][] \OML/cmm/m/it/10 c[]$\OT1/cmr/m/n/10 . That is, $[][] \
+OML/cmm/m/it/10 c[] \OT1/cmr/m/n/10 =
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 60--61
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 20--21
-
- []
-
-) [6]
+) [10]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 41.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
  (./main.aux)
@@ -1055,13 +1083,13 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
  ) 
 Here is how much of TeX's memory you used:
- 20579 strings out of 492616
- 385329 string characters out of 6129481
- 470725 words of memory out of 5000000
+ 20583 strings out of 492616
+ 385354 string characters out of 6129481
+ 472725 words of memory out of 5000000
  24121 multiletter control sequences out of 15000+600000
  7311 words of font info for 28 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,8n,81p,614b,327s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,14n,81p,661b,389s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb><
 /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb>
@@ -1076,10 +1104,10 @@ exlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/te
 xlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
 live/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texli
 ve/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on main.pdf (6 pages, 164810 bytes).
+Output written on main.pdf (10 pages, 184055 bytes).
 PDF statistics:
- 118 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
- 7 named destinations out of 1000 (max. 500000)
+ 136 PDF objects out of 1000 (max. 8388607)
+ 93 compressed objects within 1 object stream
+ 11 named destinations out of 1000 (max. 500000)
  109 words of extra memory for PDF output out of 10000 (max. 10000000)
 

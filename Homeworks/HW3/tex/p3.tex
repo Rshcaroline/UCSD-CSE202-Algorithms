@@ -15,7 +15,7 @@ The system produced by the consulting firm should take these lists and try to re
 
 \subproblem{Subproblem 1}
 
-Describe a polynomial-time algorithm that implements this system. Specifically, give a polynomial- time algorithm that takes the numbers $p_1,p_2, \dots, p_n$, and the lists $L_1,\dots,L_k$, and does one of the following two things.
+Describe a polynomial-time algorithm that implements this system. Specifically, give a polynomial-time algorithm that takes the numbers $p_1,p_2, \dots, p_n$, and the lists $L_1,\dots,L_k$, and does one of the following two things.
 
 \begin{itemize}
 \item Return lists $L_{1}^{\prime}, \ldots, L_{k}^{\prime}$ satisfying properties (A) and (B); or
@@ -26,26 +26,98 @@ Describe a polynomial-time algorithm that implements this system. Specifically, 
 
 \subsolution{High-level description}
 
-\subsolution{Pseudo Code}
+We should start by listing key properties of the problem.
+
+\begin{itemize}
+\item $n$ days
+\item $k$ doctors 
+\item On day $i$ they have a requirement that exactly $p_i$ doctors be present, $\forall i \in \{1, 2, \dots, n\}$
+\item Doctor $j$ provides a set $L_j$ of days on which he or she is willing to work and he or she only works on days he or she finds acceptable
+\end{itemize}
+
+Apparently, if we let $q_i$ be the number of doctors willing to work on day $i$, and for any $i \in \{1, 2, \dots, n\}$, we have $q_i < p_i$, then there cannot be a set of lists $L_{1}^{\prime}, \ldots, L_{k}^{\prime}$ satisfies property (B). If $\forall i \in \{1, 2, \dots, n\}$, we have $q_i \ge p_i$, then we can just arbitrarily pick $p_i$ doctors out of those $q_i$ doctors to work on day $i$.
+
+% \subsolution{Pseudo Code}
 
 \subsolution{Correctness}
 
+This algorithm is correct since it ensures that 
+
+\begin{itemize}
+\item All doctor only works on days he or she finds acceptable (since on day $i$, we only consider doctors who are willing to work)
+\item On day $i$, it cause exactly $p_i$ doctors to be present (since we pick $p_i$ doctors out of those $q_i$ doctors to work on day $i$)
+\end{itemize}
+
 \subsolution{Time complexity}
 
-
-
+For each day $i \in \{1, 2, \dots, n\}$, we should check how many doctors are willing to work. Thus, the total time should be $O(nk)$.
 
 \subproblem{Subproblem 2}
 
+The hospital finds that the doctors tend to submit lists that are much too restrictive, and so it often happens that the system reports (correctly, but unfortunately) that no acceptable set of lists $L_{1}^{\prime}, \ldots, L_{k}^{\prime}$ exists.
 
+Thus the hospital relaxes the requirements as follows. They add a new parameter $c > 0$, and the system now should try to return to each doctor $j$ a list $L_{j}^{\prime}$ with the following properties.
+
+(A*) $L_{j}^{\prime}$ contains at most c days that do not appear on the list $L_j$.
+
+(B) (Same as before) If we consider the whole set of lists $L_{1}^{\prime}, \ldots, L_{k}^{\prime}$, it causes exactly $p_i$ doctors to be present on day $i$, for $i = 1,2,\dots,n$.
+
+Describe a polynomial-time algorithm that implements this revised system. It should take the numbers $p_1,p_2,\dots,p_n$, the lists $L_1,\dots,L_k$, and the parameter $c > 0$, and do one of the following two things. 
+
+\begin{itemize}
+\item Return lists $L_{1}^{\prime}, \ldots, L_{k}^{\prime}$ satisfying properties (A*) and (B); or
+\item Report (correctly) that there is no set of lists $L_{1}^{\prime}, \ldots, L_{k}^{\prime}$ that satisfies both properties (A*) and (B).
+\end{itemize}
 
 \subsolution{Solution 2}
 
 \subsolution{High-level description}
 
-\subsolution{Pseudo Code}
+We should start by listing key properties of the problem.
+
+\begin{itemize}
+\item $n$ days
+\item $k$ doctors 
+\item On day $i$ they have a requirement that exactly $p_i$ doctors be present, $\forall i \in \{1, 2, \dots, n\}$
+\item Doctor $j$ provides a set $L_j$ of days on which he or she is willing to work but he or she can work on at most $c$ days that do not appear on the list $L_j$
+\end{itemize}
+
+This time the problem definition is a little bit different. If we let $q_i$ be the number of doctors willing to work on day $i$, and for any $i \in \{1, 2, \dots, n\}$, we have $q_i < p_i$, we can define a new variable difference $d_i = \max(0, p_i - q_i)$. We constructed a directed graph $G=(V,E)$.
+
+\begin{itemize}
+\item Nodes
+	\begin{itemize}
+		\item $s$, $t$
+		\item $k$ nodes representing the doctors: $j$, $\forall j \in \{1, 2, \dots, k\}$
+		\item $n$ nodes representing the days: $i$, $\forall i \in \{1, 2, \dots, n\}$
+	\end{itemize}
+\item Edges
+	\begin{itemize}
+		\item $s \rightarrow j$, $\forall j \in \{1, 2, \dots, k\}$, with capacity $c$
+		\item $j \rightarrow i$, $\forall i, j$ where doctor $j$ do not want to work on day $i$, with capacity $1$
+		\item $i \rightarrow t$, $\forall i \in \{1, 2, \dots, n\}$, with capacity $d_i$
+	\end{itemize}
+\end{itemize}
+
+This suggests a matching problem, and thus a max-flow problem. The solution is when the maximum flow in this network $G$ saturates all incoming edges of $t$. Otherwise, the assignment does not exist. As matchings, output the $j \rightarrow i$ edges that have flow.
+
+% \subsolution{Pseudo Code}
 
 \subsolution{Correctness}
 
+This algorithm is correct since it ensures that 
+
+\begin{itemize}
+\item For each day $i$, we need $d_i$ extra doctors who do not want to work on day $i$ (this is ensured by saturating all incoming edges of $t$)
+\item Each doctor only work on at most $c$ days (this is ensured by setting the capacity of $s \rightarrow j$ to be $c$)
+\end{itemize}
+
 \subsolution{Time complexity}
+
+\begin{itemize}
+\item There are $O(n+k)$ nodes.
+\item There are $O(n*k)$ edges.
+\item With our knowledge of this problem, we see that preflow-push scales better. By using the Preflow-push algorithm to determine the maximum flow, our complexity is $O((n+k)^2 nk)$.
+\item Calculating $d_i$ needs $O(nk)$ time complexity. Thus, the total time complexity is $O(nk+(n+k)^2 nk) = O((n+k)^2 nk)$.
+\end{itemize}
 

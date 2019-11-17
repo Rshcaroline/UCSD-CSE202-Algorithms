@@ -19,14 +19,60 @@ Your algorithm should find a solution meeting the above constraints if possible,
 
 \subsolution{High-level description}
 
+We should start by listing key properties of the problem.
+
+\begin{itemize}
+\item $n$ remote sensors $s_i$, $\forall i \in \{1, 2, \dots, n\}$, located at $(x_i, y_i)$, with an integer bandwidth requirement of $r_i$ met by assigning bandwidth on multiple base stations
+\item $m$ base stations $B_j$, $\forall j \in \{1, 2, \dots, m\}$, located at $(x_j, y_j)$, with the same integer bandwidth capacity $C$
+\item No two base stations $B_j$ and $B_k$ are less than 1 km apart
+\item No sensors may be assigned any bandwidth on a base station more than 2 km distance from it
+\item $b_{i,j}$ be the amount of bandwidth assigned to sensor $s_i$ on base station $B_j$
+\item $\forall i \in \{1, 2, \dots, n\}$, $\sum_j b_{i,j} \ge r_i$
+\item $\forall j \in \{1, 2, \dots, m\}$, $\sum_i b_{i,j} \le C$
+\end{itemize}
+
+We want to find the assignment of bandwidth, which suggests a matching problem, and thus a max-flow problem. We constructed a directed graph $G=(V,E)$.
+
+\begin{itemize}
+\item Nodes
+	\begin{itemize}
+		\item $s$, $t$
+		\item $m$ nodes representing the base stations: $B_j$, $\forall j \in \{1, 2, \dots, m\}$
+		\item $n$ nodes representing the remote sensors: $s_i$, $\forall i \in \{1, 2, \dots, n\}$
+	\end{itemize}
+\item Edges
+	\begin{itemize}
+		\item $s \rightarrow B_{j}$, $\forall j \in \{1, 2, \dots, m\}$, with capacity $C$, which ensures that each base station can have at most $C$ incoming flow
+		\item $B_{j} \rightarrow s_i$, $\forall i, j$ where sensors $s_i$ and base stations $B_j$ are less than 2 km apart, with capacity $C$. This ensures that any given base station can only contribute to sensors that it can do.
+		\item $s_i \rightarrow t$, $\forall i \in \{1, 2, \dots, n\}$, with capacity $r_{i}$
+	\end{itemize}
+\end{itemize}
+
+The solution is when the maximum flow in this network $G$ saturates all incoming edges of $t$. Otherwise, the assignment does not exist. As matchings, output the $B_{j} \rightarrow s_i$ flow.
 
 %\subsolution{Pseudo Code}
 
-
 \subsolution{Correctness}
 
+\begin{itemize}
+\item Base stations have incoming flow at most $C$, thus ensuring that the sum of all bandwidth assigned on base station be at most $C$
+\item Remote sensors have outgoing flow at most $r_i$, and it has been saturated, so the sum of all the bandwidth assigned to any remote sensor $s_i$ is $r_i$
+\item $B_{j} \rightarrow s_i$ edges exist only if the sensors $s_i$ and base stations $B_j$ are less than 2 km apart, so incompatible matches won't arise
+\item Each matched base stations contributes a bandwidth of $b_{i,j}$, which ensures the following
+	\begin{itemize}
+		\item If the $s_i \rightarrow t$ is saturated, then $s_i$ satisfies the bandwidth requirement of $r_i$
+		\item If $s_i$ satisfies the bandwidth requirement of $r_i$, then that means the $s_i \rightarrow t$ is saturated
+		\item The saturated $s_i \rightarrow t$ edges correctly correspond to the matchings
+	\end{itemize}
+\end{itemize}
 
 \subsolution{Time complexity}
+
+\begin{itemize}
+\item There are $O(n+m)<O(2n)=O(n)$ nodes.
+\item There are $O(n)$ edges since no two bases-stations are less than 1 km apart and no sensor may be assigned by any bandwidth on a base station more than 2 km distance from it.
+\item With our knowledge of this problem, we see that preflow-push scales better. By using the Preflow-push algorithm to determine the maximum flow, our complexity is $O((n)^2 n)=O(n^3)$.
+\end{itemize}
 
 
 

@@ -9,7 +9,7 @@ Now suppose we want to study this graph $G$, looking for a “close-knit” grou
 
 \subproblem{Subproblem 1}
 
-Give a polynomial-time algorithm that takes a rational number $\alpha$ and determines whether there exists a set $S$ with cohesiveness at least $\alpha$.
+Give a polynomial-time algorithm that takes a rational number $\alpha$ and determines whether there exists a set $S$ with cohesiveness greater than $\alpha$.
 
 \solution
 
@@ -19,13 +19,13 @@ We represent $G$ as $(V, E)$. Then we constructed a directed graph $G'=(N, E')$.
 
 Assume $c(N_i, N_j)$ is the capacity of edge $(N_i, N_j)$. We let $c(s, N_e)=1$ for every edge $e\in E$, $c(N_v, t)=\alpha$ for every vertex $v\in V$, $c(N_e, N_i)=c(N_e, N_j)=\infty$ if $e=(i, j)\in E$ and $i,j\in V$. 
 
-To determine whether there exists a set $S$ with cohesiveness at least $\alpha$ is to determine if there is an $s$-$t$ cut in graph $G'$ of capacity at most $|E|$. It's a minimum cut problem. We use the maximum-flow algorithm (e.g. Ford-Fulkerson) to find an $s$-$t$ cut of minimum capacity and compare it with $|E|$.
+To determine whether there exists a set $S$ with cohesiveness greater than $\alpha$ is to determine if there is an $s$-$t$ cut in graph $G'$ of capacity at most $|E|$. It's a minimum cut problem. We use the maximum-flow algorithm (e.g. Ford-Fulkerson) to find an $s$-$t$ cut of minimum capacity and compare it with $|E|$.
 
 % \subsolution{Pseudo Code}
 
 \subsolution{Correctness}
 
-We define an $s$-$t$ cut as a partition $(A, B)$ of N with $s \in A, t \in B$. The above-defined network $G'$ has the following properties:
+We define an $s$-$t$ cut as a partition $(A, B)$ of $N$ with $s \in A, t \in B$. The above-defined network $G'$ has the following properties:
 
 \begin{itemize}
 \item The source node $s$ has $|E|$ outgoing edges and their capacity is all equal to 1. So the capacity of the min cut should be less than or equal to $|E|$ (we can simply get this value by letting A=$s$).
@@ -44,9 +44,19 @@ Hence, the total capacity of our cut is $c(A,B)=\alpha |A_v|+|E|-e(A_v)$. We can
 
 \[ |E|-c(A,B) = e(A_v) - |A_v|\alpha \]
 
-According to the problem description, we can see that $e(A_v)/|A_v| \ge \alpha$ iff $|E|-c(A,B)\ge 0$. That is $c(A,B)\le |E|$.
+According to the problem description and based on the above equation, we can see that $e(A_v)/|A_v| > \alpha$ iff $|E|-c(A,B) > 0$. That is $c(A,B) < |E|$.
 
 So we've prove that we have a min cut with $c(A,B) \le |E|$ then we can find a group of vertices in our original graph with cohesiveness greater than $\alpha$.
+
+\subsolution{Time complexity}
+
+\begin{itemize}
+\item There are $O(|V|^2)$ nodes.
+\item There are $O(|V|^2)$ edges.
+\item $C$ can be arbitrarily large.
+\item Because we don't have a bound on $C$ and the problem specifically asks for a polynomial-time algorithm, we don't want something that depends on $C$. We are thus limited to Edmonds-Karp and Preflow-push. With our knowledge of this problem, we see that preflow-push scales better. 
+\item By using the Preflow-push algorithm to determine the minimum cut for a given $\alpha$, our total complexity is $O((|V|^2)^2 |V|^2)=O(|V|^6)$.
+\end{itemize}
 
 \subproblem{Subproblem 2}
 
@@ -54,11 +64,12 @@ Give a polynomial-time algorithm to find a set $S$ of nodes with maximum cohesiv
 
 \subsolution{High-level description}
 
-There are $|V|$ choices for the size of $A_v$ and $C_{2}^{|A_v|}$ choices for $e(A_v)$. Thus, it's a total of $O(|V|^3)$ possible values for $\alpha$. We can find the set of maximum cohesiveness by binary search on $\alpha$ by checking if there exists a subset with cohesiveness greater than a given value.
+There are $|V|$ choices for the size of $A_v$ and $C_{2}^{|A_v|}$ choices for $e(A_v)$. Thus, it's a total of $O(|V|^3)$ possible values for $\alpha$. We can find the set of maximum cohesiveness by binary search on $\alpha$ by checking if there exists a subset with cohesiveness greater than a given value $|E|$.
 
 \subsolution{Time complexity}
 
 % !!! Needs more
 
-By using the Ford-Fulkerson maximum-flow algorithm to determine the minimum cut for a given $\alpha$, the final time complexity should be $O(|V|^3 (|V|+|E|) C)$.
+Using binary search on $\alpha$ takes $O(\log |V|^3) = O(\log |V|)$ time complexity. Checking if there exists a subset with cohesiveness greater than a given value $|E|$ takes $O(|V|^6)$. 
 
+Thus, the total complexity should be $O(\log|V| * |V|^6)$.
