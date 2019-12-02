@@ -1,0 +1,23 @@
+\newpage
+\problem{1: Hamiltonian path} % {10+10+10+20=50}
+
+\problemdes
+
+Suppose we are given a directed graph $G = (V,E)$, with $V = \{v_1,v_2, \dots,v_n\}$, and we want to decide whether $G$ has a Hamiltonian path from $v_1$ to $v_n$. (That is, is there a path in $G$ that goes from $v_1$ to $v_n$, passing through every other vertex exactly once?)
+
+Since the Hamiltonian Path Problem is NP-complete, we do not expect that there is a polynomial-time solution for this problem. However, this does not mean that all nonpolynomial-time algorithms are equally “bad.” For example, here’s the simplest brute-force approach: For each permutation of the vertices, see if it forms a Hamiltonian path from $v_1$ to $v_n$. This takes time roughly proportional to $n!$, which is about $3\times10^{17}$ when $n = 20$.
+
+Show that the Hamiltonian Path Problem can in fact be solved in time $O(2^n \cdot p(n))$, where $p(n)$ is a polynomial function of $n$. This is a much better algorithm for moderate values of $n$; for example, $2^n$ is only about a million when $n = 20$.
+
+In addition, show that the Hamiltonian Path problem can be solved in time $O(2^n \cdot p(n))$ and in polynomial space.
+
+\solution
+
+\subsolution{High-level description}
+
+% \subsolution{Pseudo Code}
+
+\subsolution{Correctness}
+
+\subsolution{Time complexity}
+
