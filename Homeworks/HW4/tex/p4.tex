@@ -7,15 +7,70 @@ The maximum coverage problem is the following: Given a universe $U$ of $n$ eleme
 
 \solution
 
-\subsolution{High-level description}
+\subsolution{Proof}
 
+We use $OPT$ to denote the optimal set of solution of the maximum coverage problem at $k$ iteration, let $A_i$ denote the set of newly covered elements at the $i_{th}$ iteration, $B_i$ as the total set of covered elements up to $i_{th}$ iteration, and $C_i$ as the set of elements covered in $OPT$ but uncovered in $B_i$ after the $i_{th}$ iteration. 
 
+Let $W_S$ denote the weight of elements covered by set $S$. Hence, according to the definition, we know that
+
+$$W_{B_i}= \sum_{k, \text{ where } b_k\in B_i} w_{b_k} = W_{B_{i-1}}+ \sum_{k, \text{ where } a_k \in A_{i}} w_{a_k} = W_{B_{i-1}}+ W_{A_i}$$
+
+$$W_{OPT} = W_{B_i} + W_{C_i}$$
+
+The base case is $W_{A_0} = W_{B_0} = 0$ and $W_{C_0} = W_{OPT}$.
+
+We prove the greedy algorithm achieves an approximation factor of $\left(1-(1-1 / k)^{k}\right)>(1-1 / e)$ by proving the following lemmas:
+
+\textbf{Lemma 1.} $W_{A_{i+1}} \ge W_{C_i}/k$
+
+\textit{Proof.} According to our definition, we already know that the optimal solution should cover $W_{OPT}$ elements at $k$ iterations. This means at each iteration $i$, there should be some subsets of $U$ whose weights are greater than or equal to the $1/k$ of the remaining weights of uncovered elements, that is $W_{C_i}/k$. Otherwise, it was impossible to arrive at the optimal solution at $k$ iterations.
+
+\textbf{Lemma 1.} $W_{C_{i+1}} \le (1-1/k)^{i+1} \cdot W_{OPT}$
+
+\textit{Proof.} We will prove this by induction. We first show that this claim is true for base case $i=0$.
+
+$$
+\begin{aligned}
+W{C_1} \le (1-\frac{1}{k})\cdot W_{OPT} &= W_{OPT}-W_{OPT} \cdot \frac{1}{k} \\
+W_{OPT} - W_{B_1} &\le W_{OPT}-W_{OPT} \cdot \frac{1}{k} \\
+W_{B_1} &\ge \frac{1}{k} W_{OPT} \\
+W_{A_1} &\ge \frac{1}{k} W_{OPT} \\
+W_{A_1} &\ge \frac{1}{k} W_{C_0} 
+\end{aligned}
+$$
+
+The base case is proved by lemma 1. Then, the inductive hypothesis assume the $i$ iteration is true. We want to prove that the $i+1$ iteration is true. We prove by the following statements:
+
+$$
+\begin{aligned}
+W_{C_{i+1}}&=W_{C_{i}}-W_{A_{i+1}} \\ 
+W_{C_{i+1}}&\le W_{C_{i}}- W_{C_i}/k \\
+W_{C_{i+1}}&\le (1-\frac{1}{k}) W_{C_{i}} \\
+W_{C_{i+1}}&\le (1-\frac{1}{k}) W_{OPT} (1-\frac{1}{k})^i \\
+W_{C_{i+1}}&\le W_{OPT} (1-\frac{1}{k})^{i+1}
+\end{aligned}
+$$
+
+It's proved.
+
+By lemma 2, we know that $W_{C_k} \le (1-\frac{1}{k})^k \cdot W_{OPT}$. 
+
+Mathematically, $(1-\frac{1}{k})^k \approx \frac{1}{e}$, so we can get $W_{C_k} \le \frac{1}{e} \cdot W_{OPT}$.
+
+$$
+\begin{aligned}
+W_{B_k} &= W_{OPT} - W_{C_k}\\
+W_{B_k} &\ge W_{OPT} - \frac{1}{e} \cdot W_{OPT} = (1-\frac{1}{e}) W_{OPT}
+\end{aligned}
+$$
+
+Thus, we can conclude that the greedy algorithm achieves an approximation factor of $\left(1-(1-1 / k)^{k}\right)>(1-1 / e)$. 
 
 % \subsolution{Pseudo Code}
 
-\subsolution{Correctness}
+% \subsolution{Correctness}
 
-\subsolution{Time complexity}
+% \subsolution{Time complexity}
 
 
 

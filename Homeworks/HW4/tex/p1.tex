@@ -15,9 +15,26 @@ In addition, show that the Hamiltonian Path problem can be solved in time $O(2^n
 
 \subsolution{High-level description}
 
+Given $G=(V, E)$ with $V = \{v_1,v_2, \dots,v_n\}$, we want to decide if there is a Hamiltonian path from $v_1$ to $v_n$. We regard $H(G, v_1, v_n)$ as the solution of the question. Clearly, $H(G, v_1, v_n)$ is true if and only if there is a vertex $v_k$ with $H(G-\{v_1\}, v_k, v_n)$ is true, and there exist an edge $(v_1, v_k)$ so that we can get $H(G, v_1, v_n)=1$ by simply add the path $(v_1, v_k)$ to path $(v_k, v_n)$.
+
+Following the idea, we can construct the answer starting from the largest sets and gradually working down to smaller ones. It's kind of like dynamic programming. 
+
+The recursive formulation should be:
+$$H(G, v_i, v_j) = \max_{k} H(G-\{v_i\}, v_k, v_j) \text{ and } (v_i, v_k) \in E$$
+
 % \subsolution{Pseudo Code}
 
 \subsolution{Correctness}
 
+Base Case: The base case is the graph $G$ only contain 2 vertices $v_1$ and $v_2$, at least one edge exists between $v_1$ and $v_2$. Hence, $H(G, v_1, v_2)=1$.
+
+The recursive formulation is correct because of that any Hamiltonian path from $v_i$ to $v_j$ can be divided into one Hamiltonian path $v_k$ to $v_j$ plus one edge $(v_i, v_k)$. Hence the recursive formulation is true. By considering all the potential vertices, and following the dynamic programming, we ensure the $H$ is correctly computed. 
+
+Correctness proved. 
+
 \subsolution{Time complexity}
+
+We need $O(2^n)$ to decide $v_1$ and $v_n$. At each time step, we need $O(n)$ time to decide the value of $i$. And determining if $ H(G-\{v_i\}, v_k, v_j)=1$ takes $O(n)$. Thus, the total time complexity should be $O(2^n \cdot n^2)=O(2^n \cdot p(n))$.
+
+Since we follows the idea of dynamic programming, we store each time step's calculated results $ H(G-\{v_i\}, v_k, v_j)$. Hence, the space complexity should also be in polynomial, in $O(2^n n)$
 
