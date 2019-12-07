@@ -11,14 +11,19 @@ Give an example (with the items sorted in decreasing order) where this heuristic
 
 \subsolution{Solution 1}
 
-\subsolution{High-level description}
+% \subsolution{High-level description}
 
 % \subsolution{Pseudo Code}
 
-\subsolution{Correctness}
+% \subsolution{Correctness}
 
-\subsolution{Time complexity}
+% \subsolution{Time complexity}
 
+5 jobs with time $10, 9, 8, 7, 4$. 
+
+The optimal method should be assigning machine one with $10, 9$ and machine two with $8, 7, 4$. The optimal total time is $19$.
+
+However, following the greedy heuristic, the scheduling should be assigning machine one with $10, 8, 4$, machine two with $9, 7$. The time should be $22$. Hence, this heuristic is not optimal under this example.
 
 \subproblem{Subproblem 2}
 
@@ -26,12 +31,40 @@ Assume the jobs are sorted in decreasing order of time required. Show as tight a
 
 \subsolution{Solution 2}
 
-\subsolution{High-level description}
+% \subsolution{High-level description}
 
 % \subsolution{Pseudo Code}
 
-\subsolution{Correctness}
+% \subsolution{Correctness}
 
-\subsolution{Time complexity}
+% \subsolution{Time complexity}
+
+We regard $OPT$ as the optimal solution of minimum total time to complete all jobs, regard $S$ as our greedy solution.
+
+\textbf{Lemma 1.} $OPT \ge \frac{1}{2} \sum_{1 \le i \le n} t_i$
+
+\textit{Proof.} According to the definition, the total time to complete all jobs is the maximum over the two machines of the total time of all jobs scheduled on the machine, thus, at least we need $ \frac{1}{2} \sum_{1 \le i \le n} t_i$. Hence, the optimal solution is the one that all jobs distributed as evenly as possible over the two machines.
+
+\textbf{Lemma 2.} When the jobs are in decreasing order, we regard the last job to be assigned as $n$, with smallest time requirement $t_n$. Then, $t_n \le \frac{1}{3} OPT$.
+
+\textit{Proof.} For $n<5$, we can prove $t_n \le \frac{1}{3} OPT$ case by case. For $n\ge5$, we prove that $t_n$ cannot be greater than $\frac{1}{3} OPT$. If $t_n \textgreater \frac{1}{3} OPT$, since according to our definition, $t_1  \textgreater t_2 \textgreater \cdots \textgreater t_n$, then there should be at most $2$ jobs on each machine. However, with $n\ge5$, it is impossible. 
+
+\textbf{Lemma 3.} $S \le \frac{1}{2} \sum_{i=1}^{n-1} t_i + t_n$
+
+\textit{Proof.} The latest starting time of job $n$ is $\frac{1}{2} \sum_{i=1}^{n-1} t_i$,s since this is the time job $n$ will start if all two machines would take equally long in processing the first $n-1$ jobs. If they do not take equally long then some machine becomes available already earlier for starting job $n$. Thus, it's proved.
+
+After proven Lemma 1, 2 \& 3, we can get
+
+$$
+\begin{aligned}
+S &\le \frac{1}{2} \sum_{i=1}^{n-1} t_i + t_n = \frac{1}{2} \sum_{i=1}^{n} t_i + \frac{1}{2}  t_n \\
+&\le OPT + \frac{1}{2}  t_n \\
+&\le OPT + \frac{1}{2} \cdot \frac{1}{3} OPT \\
+&\le \frac{7}{6} OPT
+\end{aligned}
+$$
+
+The approximation ratio for the greedy heuristic is $7/6$.
+
 
 
