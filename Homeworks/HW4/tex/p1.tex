@@ -34,7 +34,7 @@ Correctness proved.
 
 \subsolution{Time complexity}
 
-We need $O(2^n)$ to decide the subset graph and $v_1$ and $v_n$. At each time step, we need $O(n)$ time to decide the value of $i$. And determining if $ H(G-\{v_i\}, v_k, v_j)=1$ takes $O(n)$. Thus, the total time complexity should be $O(2^n \cdot n^2)=O(2^n \cdot p(n))$.
+We need $O(2^n)$ to decide the subset graph. And determining if $ H(G-\{v_i\}, v_k, v_j)=1$ takes $O(n)$. Thus, the total time complexity should be $O(2^n \cdot n^2)=O(2^n \cdot p(n))$.
 
 Since we follows the idea of dynamic programming, we store each time step's calculated results $ H(G-\{v_i\}, v_k, v_j)$. Hence, after chosen $v_1$ and $v_n$, the space complexity should be $O(n)$. The total space complexity is $O(2^n \cdot n)$.
 
